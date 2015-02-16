@@ -1,0 +1,278 @@
+\documentclass[11pt]{article}
+\input{lnpreamble.tex}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\0}{\mathbf{0}}
+
+\DeclareMathOperator*{\Vol}{Vol}
+
+\begin{document}
+
+\handout{}{CS 591 O1: Iterative Methods for Graph Algorithms and Network Analysis}{Spring 2015}{Lecture 3: Spectral Graph and Graph Partitioning}{Instructor: Lorenzo Orecchia}{Scribe: JF}
+
+% Foreword
+
+% context (focus on anyone) why now? - current situation, and why the need is so important
+We have seen that algebraic properties of the adjacency matrix of a graph reveal information about the amount of time required before a random walk on the graph converges to the stationary distribution, a common measure of connectedness for a graph.
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+However, this approach does not immediately address other measures of connectedness, like how difficult partitioning or clustering a graph may be.
+% task (focus on author) why me? - what was undertaken to address the need
+We examine these other measures by considering partitions and cuts of a graph.
+% object (focus on document) why this document - what the document covers
+This lecture describes the conductance of a graph, a measure of how likely it is to escape from any given subset of vertices, as it relates to cuts, partitions, spectral gaps, and the convergence of random walks.
+
+% Summary
+
+% findings (focus on author) what? - what the work revealed when performing the task
+We prove the easy part of Cheeger's Inequality, that a large spectral gap implies a large conductance, and begin to provide background information for the hard part of Cheeger's Inequality.
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+Our goal in proving these (relatively tight) inequalities is to indicate the rough equivalence of conductance, spectral gap, and convergence of random walks.
+% perspective (focus on anyone) what now? - what should be done next
+
+\section{Spectral gap approximates conductance of a graph}
+% Foreword
+
+% context (focus on anyone) why now? - current situation, and why the need is so important
+We know from the previous lecture that the spectral gap of the normalized Laplacian of the graph provides an upper bound on the time required for a random walk to converge to the stationary distribution on the graph: a larger spectral gap means a faster convergence.
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+Are there other algebraic approximations of rate of convergence, and if so, how difficult are they to compute?
+% task (focus on author) why me? - what was undertaken to address the need
+We will use conductance of a graph, the smallest likelihood of a random walk escaping any set of vertices in one step.
+% object (focus on document) why this document - what the document covers
+In this section, we prove the easy part of Cheeger's Inequality,
+% Summary
+% findings (focus on author) what? - what the work revealed when performing the task
+which provides upper and lower bounds on the conductance with respect to the spectral gap.
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+This relates a geometric interpretation (eigenvalues) to a combinatoric interpretation (partitions) of the connectedness of a graph.
+% perspective (focus on anyone) what now? - what should be done next
+
+Suppose $G$ is an undirected graph with vertex set $V$ and edge set $E$.
+For any vertex $i$ in $V$, the degree of $i$ is denoted $d_i$.
+For any set of vertices $S$, the \emph{cut} induced by $S$, denoted $E(S, \bar{S})$, is defined by
+\begin{equation*}
+  E(S, \bar{S}) = \left\{\left\{i, j\right\} \in E \,\middle|\, i \in S \text{ and } j \in \bar{S} \right\}
+\end{equation*}
+The \emph{volume} of $S$, denoted $\Vol(S)$, is defined by
+\begin{equation*}
+  \Vol(S) = \sum_{i \in S} d_i
+\end{equation*}
+and the volume of the graph, denoted $\Vol(G)$, equals the volume of the entire vertex set.
+In other words, the volume of a set is twice the total number of edges in the subgraph induced by the set.
+(Each edge is counted twice, once for each of its endpoints.)
+
+The \emph{conductance} of $S$, denoted $\phi(S)$, is defined by
+\begin{equation*}
+  \phi(S) = \frac{|E(S, \bar{S})|}{\min(\Vol(S), \Vol(\bar{S}))}
+\end{equation*}
+and the conductance of the graph $G$, denoted $\phi_G$, is defined by
+\begin{equation*}
+  \phi_G = \min_{S \subseteq V} \phi(S).
+\end{equation*}
+In other words, the conductance roughly compares the number of edges in $S$ to the number of edges leaving $S$.
+%Aside: This term conductance comes from differential geometry, not from electrical circuits; that type of conductance will appear later.
+The conductance of a set is always between zero and one.
+If close to zero, there are few edges leaving $S$ and many edges in $S$.
+If close to one, there are many edges leaving $S$ and few edges in $S$.
+
+Like the spectral gap (that is, the second largest eigenvalue of the normalized Laplacian of the graph), the conductance of a graph is an estimate of how quickly a random walk converges to the stationary distribution on the edges of the graph.
+A large conductance means that every set of vertices has many edges leaving it and therefore a random walk will quickly approach the stationary distribution.
+The conductance of a set $S$ is, roughly, the probability that a random walk starting from the uniform distribution on $S$ escapes $S$ within one step.
+Under this view, starting from a vertex in $S$, we choose (independently) an edge to step across with probability
+\begin{equation*}
+  \frac{1}{\min(\Vol(S), \Vol(\bar{S}))},
+\end{equation*}
+so the probability of leaving $S$ is
+\begin{equation*}
+  |E(S, \bar{S})| \frac{1}{\min(\Vol(S), \Vol(\bar{S}))},
+\end{equation*}
+which equals the conductance of the set $S$.
+
+Following this intuition, we can relate the conductance of a graph, $\phi_G$, to the spectral gap of the graph, $\lambda_2$.
+
+\begin{theorem}[Cheeger's Inequality]
+  For any undirected graph $G$, we have $\lambda_2 / 2 \leq \phi_G \leq \sqrt{2 \lambda_2}$.
+\end{theorem}
+
+In other words, if a graph has a large spectral gap, then the graph has large conductance, and conversely, if a graph has a small spectral gap, then the graph has small conductance.
+(Both $\lambda_2$ and $\phi_G$ are real numbers in the interval $[0, 1]$, so $\sqrt{\lambda_2} \geq \lambda_2$.)
+
+The left inequality is easy to prove, and the right hard.
+We start with the easy one.
+
+\begin{proof}[Proof of the easy part of Cheeger's Inequality]
+  Our goal is to show that $\lambda_2 / 2 \leq \phi_G$, or equivalently, that $\lambda_2 \leq 2 \phi_G$.
+  By the Rayleigh quotient corresponding to $\lambda_2$ and by the definition of $\phi_G$, it suffices to show
+  \begin{equation*}
+    \min_{x \perp D^{\frac{1}{2}} \mathbf{1}} \frac{x^T \mathcal{L} x}{x^T x} \leq 2 \min_{S \subseteq V} \frac{|E(S, \bar{S})|}{\min(\Vol(S), \Vol(\bar{S}))}.
+  \end{equation*}
+  By the definition of the normalized Laplacian
+  \begin{equation*}
+    \min_{x \perp D^{\frac{1}{2}} \1} \frac{x^T \mathcal{L} x}{x^T x} = \min_{x \perp D \1} \frac{x^T L x}{x^T D x},
+  \end{equation*}
+  so it suffices to show
+  \begin{equation*}
+    \min_{x \perp D \1} \frac{x^T L x}{x^T D x} \leq 2 \min_{S \subseteq V} \frac{|E(S, \bar{S})|}{\min(\Vol(S), \Vol(\bar{S}))}.
+  \end{equation*}
+  Since we are bounding minimums, it furthermore suffices to show that for each set $S$ there is some vector $y$ orthogonal to $D \1$ such that
+  \begin{equation*}
+    \frac{y^T L y}{y^T D y} \leq \frac{2 |E(S, \bar{S})|}{\min(\Vol(S), \Vol(\bar{S}))}.
+  \end{equation*}
+  Let $S$ be an arbitrary subset of the vertices of the graph $G$ and choose $y$ to be the vector defined by
+  \begin{equation*}
+    y_i =
+    \begin{cases}
+      \phantom{+}\frac{1}{\Vol(S)} & \text{if } i \in S \\
+      -\frac{1}{\Vol(\bar{S})} & \text{if } i \in \bar{S} \\
+    \end{cases}
+  \end{equation*}
+  for each $i$ in $V$.
+  This vector is orthogonal to $D \1$ because
+  \begin{align*}
+    y^T D \1 & = \sum_{i \in V} y_i d_i \\
+    & = \sum_{i \in S} \frac{1}{\Vol(S)} d_i - \sum_{i \in \bar{S}} \frac{1}{\Vol(\bar{S})} d_i \\
+    & = \frac{1}{\Vol(S)} \sum_{i \in S} d_i - \frac{1}{\Vol(\bar{S})} \sum_{i \in \bar{S}} d_i \\
+    & = \frac{1}{\Vol(S)} \Vol(S) - \frac{1}{\Vol(\bar{S})} \Vol(\bar{S}) \\
+    & = 1 - 1 \\
+    & = 0.
+  \end{align*}
+  We compute separately the numerator and the denominator of the generalized Rayleigh quotient of $y$.
+  For the numerator,
+  \begin{align*}
+    y^T L y & = \sum_{\{i, j\} \in E} (y_i - y_j)^2 \\
+    & = \sum_{\{i, j\} \in E(S, \bar{S})} \left(\frac{1}{\Vol(S)} + \frac{1}{\Vol(\bar{S})}\right)^2 \\
+    & = \left(\frac{1}{\Vol(S)} + \frac{1}{\Vol(\bar{S})}\right)^2 \sum_{\{i, j\} \in E(S, \bar{S})} 1 \\
+    & = \left(\frac{1}{\Vol(S)} + \frac{1}{\Vol(\bar{S})}\right)^2 |E(S, \bar{S})|.
+  \end{align*}
+  For the denominator
+  \begin{align*}
+    y^T D y & = \sum_{i \in V} d_i y_i^2 \\
+    & = \sum_{i \in S} d_i \frac{1}{\Vol(S)^2} + \sum_{i \in \bar{S}} d_i \frac{1}{\Vol(\bar{S})^2} \\
+    & = \frac{1}{\Vol(S)^2} \sum_{i \in S} d_i + \frac{1}{\Vol(\bar{S})^2} \sum_{i \in \bar{S}} d_i \\
+    & = \frac{1}{\Vol(S)^2} \Vol(S) + \frac{1}{\Vol(\bar{S})^2} \Vol(\bar{S}) \\
+    & = \frac{1}{\Vol(S)} + \frac{1}{\Vol(\bar{S})}.
+  \end{align*}
+  Thus
+  \begin{align*}
+    \frac{y^T L y}{y^T D y} & = |E(S, \bar{S})| \left(\frac{1}{\Vol(S)} + \frac{1}{\Vol(\bar{S})}\right) \\
+    & = |E(S, \bar{S})| \left(\frac{\Vol(S) + \Vol(\bar{S})}{\Vol(S) \Vol(\bar{S})}\right) \\
+    & = \frac{|E(S, \bar{S})|}{\Vol(S) \Vol(\bar{S})} \Vol(G).
+  \end{align*}
+  Now it suffices to show that
+  \begin{equation*}
+    \frac{|E(S, \bar{S})|}{\Vol(S) \Vol(\bar{S})} \Vol(G) \leq \frac{2 |E(S, \bar{S})|}{\min(\Vol(S), \Vol(\bar{S}))},
+  \end{equation*}
+  or more simply, that
+  \begin{equation*}
+    \frac{\Vol(G)}{\Vol(S) \Vol(\bar{S})} \leq \frac{2}{\min(\Vol(S), \Vol(\bar{S}))}.
+  \end{equation*}
+  By an averaging argument, the larger of $\Vol(S)$ and $\Vol(\bar{S})$ is at least half of $\Vol(G)$, so
+  \begin{align*}
+    \frac{\Vol(G)}{\Vol(S) \Vol(\bar{S})} & = \frac{\Vol(G)}{\min(\Vol(S), \Vol(\bar{S})) \max(\Vol(S), \Vol(\bar{S}))} \\
+    & \leq \frac{2 \Vol(G)}{\min(\Vol(S), \Vol(\bar{S})) \Vol(G)} \\
+    & = \frac{2}{\min(\Vol(S), \Vol(\bar{S}))},
+  \end{align*}
+  which is the inequality we sought to prove.
+  Since this concludes a sequence of sufficient conditions for showing that $\lambda_2 / 2 \leq \phi_G$, we are finished.
+\end{proof}
+
+\section[Relaxation of the cut polytope yields better conductance approximation]{Relaxation of the cut polytope \\ yields better conductance approximation}
+
+\textbf{TODO I'm not sure what the end goal of this section was, so the title and section introduction may not be accurate.}
+
+% context (focus on anyone) why now? - current situation, and why the need is so important
+Now that we have a lower bound, we wish to prove an upper bound on the conductance of the graph.
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+Such an upper bound extends the results of the previous section, which states that a large spectral gap implies a large conductance, by providing the converse: a large conductance implies a large spectral gap.
+% task (focus on author) why me? - what was undertaken to address the need
+In order to do this, we view the minimization problems corresponding to finding the spectral gap as a relaxation of the minimization problem corrseponding to finding the conductance.
+% object (focus on document) why this document - what the document covers
+In this section, we start to prove the relationship between $\ell_1$-embeddable metrics and cuts of a graph.
+
+% Summary
+% findings (focus on author) what? - what the work revealed when performing the task
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+% perspective (focus on anyone) what now? - what should be done next
+
+What is the complexity of computing the conductance or the spectral gap of a
+graph?  Computing the eigenvalues of a graph is easy, whereas even
+approximating the conductance of a graph is hard. \textbf{TODO citation
+  needed.}  One way to see this is to consider an inequality implicit in the
+proof of the easy part of Cheeger's Inequality (ignoring the multiplicative
+constants):
+\begin{equation*}
+  \lambda_2 = \min_{x \perp ???} \frac{x^T L x}{x^T D x} \leq \min_{x \perp ???} \frac{x^T L x}{x^T D x} \leq \phi_G.
+\end{equation*}
+The right Rayleigh quotient is minimized over the ``cut vectors'', whereas the left Rayleigh quotient is minimized over \emph{all} vectors orthogonal to ???.
+The right minimization has a smaller domain, so it is more difficult to find a minimum.
+\textbf{TODO what is a cut vector? Is it a vector of the form $\alpha\1_S + \beta\1_{\bar{S}}$, where $\alpha \neq \beta$?}
+Specifically, the right minimization is over the \emph{cut polytope}, the convex hull of cut vectors (\textbf{TODO explain why}), and the left minimization is over the set of all vectors orthogonal to ???.
+Expanding the domain of a minimization is called \emph{relaxation}, and can be used in many settings to approximate a minimization over a more restrictive domain.
+
+There is a domain between the cut polytope and the set of all vectors orthogonal to ???: the set of $\ell_1$-embedabble cut metrics.
+A \emph{metric on a graph} is an $n \times n$ matrix $d$ over the non-negative reals (thought of as a function from $V^2$ to $\mathbb{R}^+_0$) satisfying
+\begin{enumerate}
+\item $d_{ii} = 0$ for each $i \in V$,
+\item $d_{ij} = d_{ji}$ for each $i, j \in V$ (symmetry),
+\item $d_{ij} \leq d_{ik} + d_{kj}$ for each $i, j, k \in V$ (triangle inequality).
+\end{enumerate}
+For any subset of vertices $S$, the \emph{cut metric for $S$} is the metric defined by
+\begin{equation*}
+  d_{ij} =
+  \begin{cases}
+    1 & \text{if } (i \in S \text{ and } j \in \bar{S}) \text{ or } (i \in \bar{S} \text{ and } j \in S) \\
+    0 & \text{otherwise,}
+  \end{cases}
+\end{equation*}
+for each $i, j \in V$, or more succinctly, $d = \1_S \1_{\bar{S}}^T + \1_{\bar{S}} \1_S^T$, where $\1_S$ denotes the characteristic vector of $S$ (with a 1 in entry $i$ exactly when $i \in S$).
+A metric $d$ is \emph{$\ell_1$-embeddable} if there is a positive integer $k$ and a function $f \colon V \to \mathbb{R}^k$ such that $d_{ij} = \| f(i) - f(j) \|_1$.
+
+%% The quadratic form for the Laplacian of a graph does not induce a metric.
+\textbf{TODO Need to explain here what is the end goal of comparing cut metrics and l1 embeddable metrics.}
+
+\begin{lemma}
+  A cut metric is an $\ell_1$-embeddable metric.
+\end{lemma}
+\begin{proof}
+  Let $S$ be a subset of vertices and $d$ be its cut metric.
+  If we choose $k$ to be 1 and $f$ to be the characteristic function of $S$, then
+  \begin{align*}
+    d_{i, j} & = (\1_S \1^T_{\bar{S}} + \1_{\bar{S}} \1_S^T)_{ij} \\
+    & = (\1_S \1^T_{\bar{S}})_{ij} + (\1_{\bar{S}} \1_S^T)_{ij} \\
+    & = (\1_S)_i (\1_{\bar{S}})_j + (\1_{\bar{S}})_i (\1_S)_j \\
+    & = f(i) (1 - f(j)) + (1- f(i)) (f_j) \\
+    & = f(i) + f(j) - 2 f(i) f(j).
+  \end{align*}
+  Enumerating $f(i) + f(j) - 2 f(i) f(j)$ and $\|f(i) - f(j)\|_1$ over the four possible pairs of values of $f(i)$ and $f(j)$ reveals that the two expressions are equal.
+  Therefore, $d$ is $\ell_1$-embeddable.
+\end{proof}
+
+\begin{theorem}
+  The convex hull of $\ell_1$-embeddable metrics equals the convex hull of cut metrics.
+\end{theorem}
+\begin{proof}
+  By the previous lemma, each cut metric is and $\ell_1$-embeddable metric, and hence, trivially, a convex combination of $\ell_1$-embeddable metrics.
+  Thus it suffices to prove that each $\ell_1$-embeddable metric can be expressed as a convex combination of cut metrics.
+
+  Suppose $d$ is an $\ell_1$-embeddable metric, so there is some positive integer $k$ and function $f \colon V \to \mathbb{R}^k$ such that $d_{ij} = \|f(i) - f(j)\|_1$.
+  We wish to express $d$ as $\sum_{S \subseteq V} \alpha_S d^S$, where each $d^S$ is the cut metric for $S$.
+
+  For each dimension $m$ in $\{1, \dotsc, k\}$, the embedding $f$ induces a permutation $\pi$ on the vertices such that $f(\pi(1))_m \leq \dotsb \leq f(\pi(n))_m$.
+  In other words, each of the elements $f(i)$ in $\mathbb{R}^k$ can be sorted in nondecreasing order according to the projection onto their $m$th component.
+  For each dimension $m$ and each vertex $i$, let $\alpha_{S^m_i} = |f(\pi(i))_m - f(\pi(i + 1))_m|$ and $S^m_i = \{ j \in V \,|\, f(\pi(j)) \leq f(\pi(i)) \}$.
+  In other words, $S^m_i$ is the set of all vertices whose images appear before the image of $i$ in the ordering and $\alpha_{S^m_i}$ is the distance from the image of $i$ to the image with the next largest $m$th component.
+
+  Now if we choose all other cuts $S$ to have coefficient $\alpha_S$ equal to zero, then we need only prove that
+  \begin{equation*}
+    d = \sum_{m = 1}^k \sum_{i = 1}^n \alpha_{S^m_i} d^{S^m_i}.
+  \end{equation*}
+  Let $u$ and $v$ be vertices in $V$.
+
+  \textbf{TODO I'm not sure how to complete this proof.}
+\end{proof}
+
+\end{document}
