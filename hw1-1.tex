@@ -1,0 +1,178 @@
+%% hw1-1.tex - CS 591 Homework 1, part 1.
+%%
+%% Copyright 2015 Jeffrey Finkelstein.
+%%
+%% This LaTeX markup document is made available under the terms of the Creative
+%% Commons Attribution-ShareAlike 4.0 International License,
+%% https://creativecommons.org/licenses/by-sa/4.0/.
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+%% This must come before hyperref.
+\usepackage{amsthm}
+%% This is strongly recommended by biblatex.
+\usepackage[english]{babel}
+\usepackage[backend=biber]{biblatex}
+\usepackage[T1]{fontenc}
+%% This must come before csquotes.
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+%% This is strongly recommended by biblatex.
+\usepackage{csquotes}
+%% This must come before hyperref.
+\usepackage{thmtools}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+%% Set the amount by which certain characters protrude into the margins.
+%%
+%% \LoadMicrotypeFile{cmr}
+%%
+%%     This command forces the built-in protrusion settings for the Computer
+%%     Modern Roman (cmr) font family to become available at this point, so
+%%     that we can override these settings on the next line. Even though we are
+%%     really using the Latin Modern Roman (lmr) fonts, microtype uses the cmr
+%%     configuration file.
+%%
+%% \SetProtrusion
+%%
+%%     This instructs the microtype package that we are going to modify the
+%%     protrusion settings.
+%%
+%% [load=lmr-T1]
+%%
+%%     Loads the Type 1 (T1) encoding of the lmr font family, thereby setting
+%%     the default protrusion values for all the characters. This is only
+%%     possible after the \LoadMicrotypeFile{cmr} command (microtype
+%%     essentially considers lmr to be an alias for cmr).
+%%
+%% {encoding=T1, family=lmr}
+%%
+%%     Indicates that we are going to modify the protrusion values for the T1
+%%     encoding of the lmr font family.
+%%
+%% \textquotedblright = {,1000} (and similar commands)
+%%
+%%     Force the character given by \textquotedblright to have default
+%%     protrusion on the left margin (given by an empty string before the
+%%     comma) and full protrusion (that is, protrusion value 1000) on the right
+%%     margin.
+\LoadMicrotypeFile{cmr}
+\SetProtrusion
+    [load=lmr-T1]
+    {encoding=T1, family=lmr}
+    {
+      \textquotedblright = {,1000},
+      \textquotedblleft = {1000,},
+      {'} = {,1000},
+      {,} = {,1000},
+      {:} = {,1000},
+      {;} = {,1000},
+      {.} = {,1000}
+    }
+
+%% Set the title and author of the PDF file.
+\hypersetup{pdftitle={Homework 1, part 1}, pdfauthor={Jeffrey Finkelstein}}
+
+%% Declare the bibliography file.
+\addbibresource{document.bib}
+
+%% Declare theorem-like environments.
+\declaretheorem[numberwithin=section]{theorem}
+
+%% Custom commands are declared here.
+\newcommand{\email}[1]{\textlangle\href{mailto:#1}{\nolinkurl{#1}}\textrangle}
+\newcommand{\todo}[1]{\textbf{TODO #1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\0}{\mathbf{0}}
+
+%% Redefine the footnote environment so it has no reference and no number.
+\long\def\symbolfootnote#1{\begingroup%
+\def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup}
+
+%% Define the author, title, and date for the document.
+\author{Jeffrey~Finkelstein}
+\title{Homework 1, part 1}
+
+\begin{document}
+
+\maketitle
+
+%% Document content goes here.
+\begin{enumerate}
+\item[11]
+  \begin{enumerate}
+  \item
+    The shortest path metric $D$ for $K_{2,3}$ can be expressed as a matrix:
+    \begin{equation*}
+      D =
+      \begin{bmatrix}
+        0 & 2 & 1 & 1 & 1 \\
+        2 & 0 & 1 & 1 & 1 \\
+        1 & 1 & 0 & 2 & 2 \\
+        1 & 1 & 2 & 0 & 2 \\
+        1 & 1 & 2 & 2 & 0
+      \end{bmatrix}
+      .
+    \end{equation*}
+    Assume for the sake of producing a contradiction that $D$ can be $\ell_1$-embedded isometrically.
+    Suppose $t$ is the dimension of the embedded space, and let $i \mapsto x_i$ be the mapping from vertices to points in $\R^t$.
+    Consider the embedding of the three vertices in the left vertex set, $x_3$, $x_4$, and $x_5$.
+    Any three points in $\R^t$ must be coplanar.
+    Since any isometric embedding is isomorphic up to rotation and translation in $\R^t$, we can assume without loss of generality that the three points lie on the plane corresponding to the first two components of the vectors and that they are centered around the origin.
+    Specifically, since each pair of these points must be at distance 2, we assume the three points $x_3$, $x_4$, and $x_5$ are the respective vertices of the triangle
+    \begin{equation*}
+      \begin{bmatrix}
+        1 \\ 0 \\ \0
+      \end{bmatrix},
+      \begin{bmatrix}
+        -1 \\ 0 \\ \0
+      \end{bmatrix},
+      \begin{bmatrix}
+        0 \\ 1 \\ \0
+      \end{bmatrix},
+    \end{equation*}
+    where $\0$ denotes the zero vector of dimension $t - 2$.
+
+    The points $x_1$ and $x_2$ must each be at distance 1 from each of the other three points.
+    By solving the system of linear equations, we find that any vector at distance 1 from each of the other three points must be the all zeros vector of dimension $t$.
+    (The all zeros vector is the intersection of the $\ell_1$ unit hyperspheres in $\R^t$ centered at each of those three points.)
+    Since $x_1$ and $x_2$ must be at distance 2, which is strictly greater than zero, they cannot both be the all zeros vector (by the definition of a metric space).
+    Therefore we have achieved a contradiction: $x_1$ and $x_2$ are not both the same vector, but $x_1$ and $x_2$ must be the same vector.
+
+  \item
+    Our embedding will be in $\R^3$\kern-0.4em.
+    We again embed the vertices $3$, $4$, and $5$ in a triangle whose vertices, $x_3$, $x_4$, and $x_5$, are as close as possible in order to allow us more room to place the remaining two points.
+    We choose the points
+    \begin{equation*}
+      \begin{bmatrix}
+        3/4 \\ 0 \\ 0
+      \end{bmatrix},
+      \begin{bmatrix}
+        -3/4 \\ 0 \\ 0
+      \end{bmatrix}, \text{ and }
+      \begin{bmatrix}
+        0 \\ 3/4 \\ 0
+      \end{bmatrix}.
+    \end{equation*}
+    The distance between each pair of these points is $6/4$, which is $3 / 4$ of the shortest path distance.
+    Now the intersection of the $\ell_1$ balls of radius $4/3$ centered at each of the three points defines a closed octahedron.
+    Each point in the octahedron is within an acceptable distance to each of the three points of the triangle.
+    Since $x_1$ and $x_2$ must be far from each other, we choose the vertices of the octahedron directly above and below the origin:
+    \begin{equation*}
+      \begin{bmatrix}
+        0 \\ 0 \\ 3/4
+      \end{bmatrix},
+      \begin{bmatrix}
+        0 \\ 0 \\ -3/4
+      \end{bmatrix}
+    \end{equation*}
+    Now the distance between $x_1$ and $x_2$ is $6/4$, which is again $3/4$ of the shortest path distance between their corresponding graph vertices.
+  \end{enumerate}
+\end{enumerate}
+
+%% Print the bibliography section here.
+\printbibliography
+
+\end{document}
