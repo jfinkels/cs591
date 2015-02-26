@@ -85,6 +85,7 @@
     \newcommand{\email}[1]{\textlangle\href{mailto:#1}{\nolinkurl{#1}}\textrangle}
     \newcommand{\todo}[1]{\textbf{TODO #1}}
     \newcommand{\R}{\mathbb{R}}
+    \newcommand{\1}{\mathbf{1}}
     \newcommand{\0}{\mathbf{0}}
     \renewcommand{\i}{\text{i}}
 
@@ -143,6 +144,20 @@
       \item Not completed yet.
       \end{enumerate}
 
+    \item[3]
+      Let $H_1, \dotsc, H_k$ be the connected components of $G$.
+      Consider the set $S$ defined by $S = \{\1_{H_1}, \dotsc, \1_{H_k}\}$, where $\1_{H_i}$ is the characteristic vector on the vertices of $H_i$.
+      In order to prove that the $0$ eigenvalue of $L_G$ has multiplicity exactly $k$, we will prove that $S$ is a basis for the $0$-eigenspace (or in other words, the kernel of $L_G$).
+      Since the connected components induce a partition on the vertices of $G$, for each $i$ and $j$ in $[k]$ we have $\langle \1_{H_i}, \1_{H_j} \rangle = 0$, so each pair of vectors in $S$ is orthogonal.
+      Thus $S$ is a linearly independent set.
+      To show that $S$ spans the $0$-eigenspace, consider $\langle x, L_G x \rangle$.
+      By the definition of the Laplacian, $\langle x, L_G x \rangle = \sum_{(i, j) \in E(G)} (x_i - x_j)^2$.
+      Since $L_G x$ equals zero, so does $\langle x, L_G x \rangle$, and hence each addend $(x_i - x_j)^2$ must be zero.
+      In order to satisfy this equality, $x_i$ must equal $x_j$ for each $i$ and $j$ within the same connected component.
+      Thus $x$ is constant within each connected component.
+      In other words, $x = \sum_{i = 1}^k \alpha_i \1_{H_i}$ for some $\alpha_1, \dotsc, \alpha_k \in \R$.
+
+      Since we have shown that $S$ is linearly independent and spans the kernel of $L_G$, we conclude that the dimension of the kernel of $L_G$ is exactly $k$, so $L_G$ has exactly $k$ eigenvalues equal to $0$.
     \item[11]
       \begin{enumerate}
       \item
