@@ -65,114 +65,156 @@
     {
       \textquotedblright = {,1000},
       \textquotedblleft = {1000,},
-      {'} = {,1000},
-      {,} = {,1000},
-      {:} = {,1000},
-      {;} = {,1000},
-      {.} = {,1000}
+                        {'} = {,1000},
+                        {,} = {,1000},
+                        {:} = {,1000},
+                        {;} = {,1000},
+                        {.} = {,1000}
     }
 
-%% Set the title and author of the PDF file.
-\hypersetup{pdftitle={Homework 1, part 1}, pdfauthor={Jeffrey Finkelstein}}
+    %% Set the title and author of the PDF file.
+    \hypersetup{pdftitle={Homework 1, part 1}, pdfauthor={Jeffrey Finkelstein}}
 
-%% Declare the bibliography file.
-\addbibresource{document.bib}
+    %% Declare the bibliography file.
+    \addbibresource{document.bib}
 
-%% Declare theorem-like environments.
-\declaretheorem[numberwithin=section]{theorem}
+    %% Declare theorem-like environments.
+    \declaretheorem[numberwithin=section]{theorem}
 
-%% Custom commands are declared here.
-\newcommand{\email}[1]{\textlangle\href{mailto:#1}{\nolinkurl{#1}}\textrangle}
-\newcommand{\todo}[1]{\textbf{TODO #1}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\0}{\mathbf{0}}
+    %% Custom commands are declared here.
+    \newcommand{\email}[1]{\textlangle\href{mailto:#1}{\nolinkurl{#1}}\textrangle}
+    \newcommand{\todo}[1]{\textbf{TODO #1}}
+    \newcommand{\R}{\mathbb{R}}
+    \newcommand{\0}{\mathbf{0}}
+    \renewcommand{\i}{\text{i}}
 
-%% Redefine the footnote environment so it has no reference and no number.
-\long\def\symbolfootnote#1{\begingroup%
-\def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup}
+    %% Redefine the footnote environment so it has no reference and no number.
+    \long\def\symbolfootnote#1{\begingroup%
+      \def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup}
 
-%% Define the author, title, and date for the document.
-\author{Jeffrey~Finkelstein}
-\title{Homework 1, part 1}
+    %% Define the author, title, and date for the document.
+    \author{Jeffrey~Finkelstein}
+    \title{Homework 1, part 1}
 
-\begin{document}
+    \begin{document}
 
-\maketitle
+    \maketitle
 
-%% Document content goes here.
-\begin{enumerate}
-\item[11]
-  \begin{enumerate}
-  \item
-    The shortest path metric $D$ for $K_{2,3}$ can be expressed as a matrix:
-    \begin{equation*}
-      D =
-      \begin{bmatrix}
-        0 & 2 & 1 & 1 & 1 \\
-        2 & 0 & 1 & 1 & 1 \\
-        1 & 1 & 0 & 2 & 2 \\
-        1 & 1 & 2 & 0 & 2 \\
-        1 & 1 & 2 & 2 & 0
-      \end{bmatrix}
-      .
-    \end{equation*}
-    Assume for the sake of producing a contradiction that $D$ can be $\ell_1$-embedded isometrically.
-    Suppose $t$ is the dimension of the embedded space, and let $i \mapsto x_i$ be the mapping from vertices to points in $\R^t$.
-    Consider the embedding of the three vertices in the left vertex set, $x_3$, $x_4$, and $x_5$.
-    Any three points in $\R^t$ must be coplanar.
-    Since any isometric embedding is isomorphic up to rotation and translation in $\R^t$, we can assume without loss of generality that the three points lie on the plane corresponding to the first two components of the vectors and that they are centered around the origin.
-    Specifically, since each pair of these points must be at distance 2, we assume the three points $x_3$, $x_4$, and $x_5$ are the respective vertices of the triangle
-    \begin{equation*}
-      \begin{bmatrix}
-        1 \\ 0 \\ \0
-      \end{bmatrix},
-      \begin{bmatrix}
-        -1 \\ 0 \\ \0
-      \end{bmatrix},
-      \begin{bmatrix}
-        0 \\ 1 \\ \0
-      \end{bmatrix},
-    \end{equation*}
-    where $\0$ denotes the zero vector of dimension $t - 2$.
+    %% Document content goes here.
+    \begin{enumerate}
 
-    The points $x_1$ and $x_2$ must each be at distance 1 from each of the other three points.
-    By solving the system of linear equations, we find that any vector at distance 1 from each of the other three points must be the all zeros vector of dimension $t$.
-    (The all zeros vector is the intersection of the $\ell_1$ unit hyperspheres in $\R^t$ centered at each of those three points.)
-    Since $x_1$ and $x_2$ must be at distance 2, which is strictly greater than zero, they cannot both be the all zeros vector (by the definition of a metric space).
-    Therefore we have achieved a contradiction: $x_1$ and $x_2$ are not both the same vector, but $x_1$ and $x_2$ must be the same vector.
+    \item[1]
+      (With help from Wikipedia.)
 
-  \item
-    Our embedding will be in $\R^3$\kern-0.4em.
-    We again embed the vertices $3$, $4$, and $5$ in a triangle whose vertices, $x_3$, $x_4$, and $x_5$, are as close as possible in order to allow us more room to place the remaining two points.
-    We choose the points
-    \begin{equation*}
-      \begin{bmatrix}
-        3/4 \\ 0 \\ 0
-      \end{bmatrix},
-      \begin{bmatrix}
-        -3/4 \\ 0 \\ 0
-      \end{bmatrix}, \text{ and }
-      \begin{bmatrix}
-        0 \\ 3/4 \\ 0
-      \end{bmatrix}.
-    \end{equation*}
-    The distance between each pair of these points is $6/4$, which is $3 / 4$ of the shortest path distance.
-    Now the intersection of the $\ell_1$ balls of radius $4/3$ centered at each of the three points defines a closed octahedron.
-    Each point in the octahedron is within an acceptable distance to each of the three points of the triangle.
-    Since $x_1$ and $x_2$ must be far from each other, we choose the vertices of the octahedron directly above and below the origin:
-    \begin{equation*}
-      \begin{bmatrix}
-        0 \\ 0 \\ 3/4
-      \end{bmatrix},
-      \begin{bmatrix}
-        0 \\ 0 \\ -3/4
-      \end{bmatrix}
-    \end{equation*}
-    Now the distance between $x_1$ and $x_2$ is $6/4$, which is again $3/4$ of the shortest path distance between their corresponding graph vertices.
-  \end{enumerate}
-\end{enumerate}
+      \begin{enumerate}
+      \item
+        First we prove that if $M$ is a square non-negative irreducible matrix then $\lambda$, the largest eigenvalue in (Euclidean) norm is a real positive number.
+        If $\lambda$ were zero, then all the eigenvalues would be zero, which is impossible for an irreducible matrix.
+        Thus $\lambda$ is a complex number different from zero.
+        Without loss of generality, assume that $\|\lambda\|_2 = 1$: if $\lambda$ is not of norm $1$, simply consider the matrix $(A / \|\lambda\|_2)$, whose eigenvalues are each scaled by $1 / \|\lambda\|_2$ and whose eigenvalues maintain their positivity or negativity (since the scaling factor is positive).
+        Thus a real positive eigenvalue of the scaled matrix corresponds to a real positive eigenvalue of the original matrix.
 
-%% Print the bibliography section here.
-\printbibliography
+        Assume for the sake of producing a contradiction that $\lambda$ is not a positive real number, so $\lambda$ is a complex number where either the real part is negative or the complex part is not zero.
+        Let $k'$ be the smallest integer such that $M^{k'}$ is positive (which must exist because $M$ is irreducible).
+        Let $k$ be the smallest integer greater than $k'$ such that the real part of  $\lambda^k$ is negative.
+        Let $\epsilon$ be half the smallest diagonal value of $M^k$ and consider the matrix $P$ defined by $P = M^k - \epsilon I$.
+        Let $x$ be an eigenvector for $\lambda$.
+        Now $M x = \lambda x$ implies $M^k x = \lambda^k x$, and hence
+        \begin{equation*}
+          Px = (M^k - \epsilon I) x = M^k x - \epsilon I x = \lambda^k x - \epsilon x = (\lambda^k - \epsilon) x.
+        \end{equation*}
+        If $\lambda^k = a + b \i$, then $\lambda^k - \epsilon = (a - \epsilon) + b \i$ for some negative real number $a$ and some real number $b$.
+        By the definition of the Euclidean norm,
+        \begin{align*}
+          \|\lambda^k - \epsilon\| & = \|(a - \epsilon) + b \i \|_2 \\
+          & = \sqrt{(a - \epsilon)^2 + b^2} \\
+          & = \sqrt{a^2 - 2 \epsilon a + \epsilon^2 + b^2} \\
+          & > \sqrt{a^2 + 2 \epsilon + \epsilon^2 + b^2} \\
+          & = \sqrt{\epsilon (2 + \epsilon) + a^2 + b^2} \\
+          & > \sqrt{a^2 + b^2} \\
+          & = \| a + b \i \| \\
+          & = \| \lambda^k \|,
+        \end{align*}
+        where the first inequality is because $a$ is negative and the second is because $\epsilon$ is positive.
 
-\end{document}
+        We know that the largest norm of any eigenvalue in $M$ is one, thus the largest norm of any eigenvalue in $M^k$ is 1, and furthermore the largest norm of any eigenvalue in $M^k - \epsilon$ is 1.
+        Therefore $\| \lambda^k - \epsilon \| \leq \| \lambda^k \| = 1$, but also $\| \lambda^k - \epsilon \| > \| \lambda^k \| = 1$ from the inequality above.
+        This is a contradiction, hence $\lambda$ must be a real positive number.
+      \item Not completed yet.
+      \end{enumerate}
+
+    \item[11]
+      \begin{enumerate}
+      \item
+        The shortest path metric $D$ for $K_{2,3}$ can be expressed as a matrix:
+        \begin{equation*}
+          D =
+          \begin{bmatrix}
+            0 & 2 & 1 & 1 & 1 \\
+            2 & 0 & 1 & 1 & 1 \\
+            1 & 1 & 0 & 2 & 2 \\
+            1 & 1 & 2 & 0 & 2 \\
+            1 & 1 & 2 & 2 & 0
+          \end{bmatrix}
+          .
+        \end{equation*}
+        Assume for the sake of producing a contradiction that $D$ can be $\ell_1$-embedded isometrically.
+        Suppose $t$ is the dimension of the embedded space, and let $i \mapsto x_i$ be the mapping from vertices to points in $\R^t$.
+        Consider the embedding of the three vertices in the left vertex set, $x_3$, $x_4$, and $x_5$.
+        Any three points in $\R^t$ must be coplanar.
+        Since any isometric embedding is isomorphic up to rotation and translation in $\R^t$, we can assume without loss of generality that the three points lie on the plane corresponding to the first two components of the vectors and that they are centered around the origin.
+        Specifically, since each pair of these points must be at distance 2, we assume the three points $x_3$, $x_4$, and $x_5$ are the respective vertices of the triangle
+        \begin{equation*}
+          \begin{bmatrix}
+            1 \\ 0 \\ \0
+          \end{bmatrix},
+          \begin{bmatrix}
+            -1 \\ 0 \\ \0
+          \end{bmatrix},
+          \begin{bmatrix}
+            0 \\ 1 \\ \0
+          \end{bmatrix},
+        \end{equation*}
+        where $\0$ denotes the zero vector of dimension $t - 2$.
+
+        The points $x_1$ and $x_2$ must each be at distance 1 from each of the other three points.
+        By solving the system of linear equations, we find that any vector at distance 1 from each of the other three points must be the all zeros vector of dimension $t$.
+        (The all zeros vector is the intersection of the $\ell_1$ unit hyperspheres in $\R^t$ centered at each of those three points.)
+        Since $x_1$ and $x_2$ must be at distance 2, which is strictly greater than zero, they cannot both be the all zeros vector (by the definition of a metric space).
+        Therefore we have achieved a contradiction: $x_1$ and $x_2$ are not both the same vector, but $x_1$ and $x_2$ must be the same vector.
+
+      \item
+        Our embedding will be in $\R^3$\kern-0.4em.
+        We again embed the vertices $3$, $4$, and $5$ in a triangle whose vertices, $x_3$, $x_4$, and $x_5$, are as close as possible in order to allow us more room to place the remaining two points.
+        We choose the points
+        \begin{equation*}
+          \begin{bmatrix}
+            3/4 \\ 0 \\ 0
+          \end{bmatrix},
+          \begin{bmatrix}
+            -3/4 \\ 0 \\ 0
+          \end{bmatrix}, \text{ and }
+          \begin{bmatrix}
+            0 \\ 3/4 \\ 0
+          \end{bmatrix}.
+        \end{equation*}
+        The distance between each pair of these points is $6/4$, which is $3 / 4$ of the shortest path distance.
+        Now the intersection of the $\ell_1$ balls of radius $4/3$ centered at each of the three points defines a closed octahedron.
+        Each point in the octahedron is within an acceptable distance to each of the three points of the triangle.
+        Since $x_1$ and $x_2$ must be far from each other, we choose the vertices of the octahedron directly above and below the origin:
+        \begin{equation*}
+          \begin{bmatrix}
+            0 \\ 0 \\ 3/4
+          \end{bmatrix},
+          \begin{bmatrix}
+            0 \\ 0 \\ -3/4
+          \end{bmatrix}
+        \end{equation*}
+        Now the distance between $x_1$ and $x_2$ is $6/4$, which is again $3/4$ of the shortest path distance between their corresponding graph vertices.
+      \end{enumerate}
+    \end{enumerate}
+
+    %% Print the bibliography section here.
+    \printbibliography
+
+    \end{document}
