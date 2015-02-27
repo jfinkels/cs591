@@ -65,171 +65,284 @@
     {
       \textquotedblright = {,1000},
       \textquotedblleft = {1000,},
-                        {'} = {,1000},
-                        {,} = {,1000},
-                        {:} = {,1000},
-                        {;} = {,1000},
-                        {.} = {,1000}
+      {'} = {,1000},
+      {,} = {,1000},
+      {:} = {,1000},
+      {;} = {,1000},
+      {.} = {,1000}
     }
 
-    %% Set the title and author of the PDF file.
-    \hypersetup{pdftitle={Homework 1, part 1}, pdfauthor={Jeffrey Finkelstein}}
+%% Set the title and author of the PDF file.
+\hypersetup{pdftitle={Homework 1, part 1}, pdfauthor={Jeffrey Finkelstein}}
 
-    %% Declare the bibliography file.
-    \addbibresource{document.bib}
+%% Declare the bibliography file.
+\addbibresource{hw1.bib}
 
-    %% Declare theorem-like environments.
-    \declaretheorem[numberwithin=section]{theorem}
+%% Declare theorem-like environments.
+\declaretheorem[numberwithin=section]{theorem}
 
-    %% Custom commands are declared here.
-    \newcommand{\email}[1]{\textlangle\href{mailto:#1}{\nolinkurl{#1}}\textrangle}
-    \newcommand{\todo}[1]{\textbf{TODO #1}}
-    \newcommand{\R}{\mathbb{R}}
-    \newcommand{\1}{\mathbf{1}}
-    \newcommand{\0}{\mathbf{0}}
-    \renewcommand{\i}{\text{i}}
+%% Custom commands are declared here.
+\newcommand{\email}[1]{\textlangle\href{mailto:#1}{\nolinkurl{#1}}\textrangle}
+\newcommand{\todo}[1]{\textbf{TODO #1}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\0}{\mathbf{0}}
+\renewcommand{\i}{\text{i}}
+\renewcommand{\L}{\mathcal{L}}
+\DeclareMathOperator{\tr}{tr}
 
-    %% Redefine the footnote environment so it has no reference and no number.
-    \long\def\symbolfootnote#1{\begingroup%
-      \def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup}
+%% Redefine the footnote environment so it has no reference and no number.
+\long\def\symbolfootnote#1{\begingroup%
+  \def\thefootnote{\fnsymbol{footnote}}\footnotetext{#1}\endgroup}
 
-    %% Define the author, title, and date for the document.
-    \author{Jeffrey~Finkelstein}
-    \title{Homework 1, part 1}
+%% Define the author, title, and date for the document.
+\author{Jeffrey~Finkelstein}
+\title{Homework 1, part 1}
 
-    \begin{document}
+\begin{document}
 
-    \maketitle
+\maketitle
 
-    %% Document content goes here.
-    \begin{enumerate}
+%% Document content goes here.
+\begin{enumerate}
 
-    \item[1]
-      (With help from Wikipedia.)
+\item[1]
+  (With help from Wikipedia.)
 
-      \begin{enumerate}
-      \item
-        First we prove that if $M$ is a square non-negative irreducible matrix then $\lambda$, the largest eigenvalue in (Euclidean) norm is a real positive number.
-        If $\lambda$ were zero, then all the eigenvalues would be zero, which is impossible for an irreducible matrix.
-        Thus $\lambda$ is a complex number different from zero.
-        Without loss of generality, assume that $\|\lambda\|_2 = 1$: if $\lambda$ is not of norm $1$, simply consider the matrix $(A / \|\lambda\|_2)$, whose eigenvalues are each scaled by $1 / \|\lambda\|_2$ and whose eigenvalues maintain their positivity or negativity (since the scaling factor is positive).
-        Thus a real positive eigenvalue of the scaled matrix corresponds to a real positive eigenvalue of the original matrix.
+  \begin{enumerate}
+  \item
+    First we prove that if $M$ is a square non-negative irreducible matrix then $\lambda$, the largest eigenvalue in (Euclidean) norm is a real positive number.
+    If $\lambda$ were zero, then all the eigenvalues would be zero, which is impossible for an irreducible matrix.
+    Thus $\lambda$ is a complex number different from zero.
+    Without loss of generality, assume that $\|\lambda\|_2 = 1$: if $\lambda$ is not of norm $1$, simply consider the matrix $(A / \|\lambda\|_2)$, whose eigenvalues are each scaled by $1 / \|\lambda\|_2$ and whose eigenvalues maintain their positivity or negativity (since the scaling factor is positive).
+    Thus a real positive eigenvalue of the scaled matrix corresponds to a real positive eigenvalue of the original matrix.
 
-        Assume for the sake of producing a contradiction that $\lambda$ is not a positive real number, so $\lambda$ is a complex number where either the real part is negative or the complex part is not zero.
-        Let $k'$ be the smallest integer such that $M^{k'}$ is positive (which must exist because $M$ is irreducible).
-        Let $k$ be the smallest integer greater than $k'$ such that the real part of  $\lambda^k$ is negative.
-        Let $\epsilon$ be half the smallest diagonal value of $M^k$ and consider the matrix $P$ defined by $P = M^k - \epsilon I$.
-        Let $x$ be an eigenvector for $\lambda$.
-        Now $M x = \lambda x$ implies $M^k x = \lambda^k x$, and hence
-        \begin{equation*}
-          Px = (M^k - \epsilon I) x = M^k x - \epsilon I x = \lambda^k x - \epsilon x = (\lambda^k - \epsilon) x.
-        \end{equation*}
-        If $\lambda^k = a + b \i$, then $\lambda^k - \epsilon = (a - \epsilon) + b \i$ for some negative real number $a$ and some real number $b$.
-        By the definition of the Euclidean norm,
-        \begin{align*}
-          \|\lambda^k - \epsilon\| & = \|(a - \epsilon) + b \i \|_2 \\
-          & = \sqrt{(a - \epsilon)^2 + b^2} \\
-          & = \sqrt{a^2 - 2 \epsilon a + \epsilon^2 + b^2} \\
-          & > \sqrt{a^2 + 2 \epsilon + \epsilon^2 + b^2} \\
-          & = \sqrt{\epsilon (2 + \epsilon) + a^2 + b^2} \\
-          & > \sqrt{a^2 + b^2} \\
-          & = \| a + b \i \| \\
-          & = \| \lambda^k \|,
-        \end{align*}
-        where the first inequality is because $a$ is negative and the second is because $\epsilon$ is positive.
+    Assume for the sake of producing a contradiction that $\lambda$ is not a positive real number, so $\lambda$ is a complex number where either the real part is negative or the complex part is not zero.
+    Let $k'$ be the smallest integer such that $M^{k'}$ is positive (which must exist because $M$ is irreducible).
+    Let $k$ be the smallest integer greater than $k'$ such that the real part of  $\lambda^k$ is negative.
+    Let $\epsilon$ be half the smallest diagonal value of $M^k$ and consider the matrix $P$ defined by $P = M^k - \epsilon I$.
+    Let $x$ be an eigenvector for $\lambda$.
+    Now $M x = \lambda x$ implies $M^k x = \lambda^k x$, and hence
+    \begin{equation*}
+      Px = (M^k - \epsilon I) x = M^k x - \epsilon I x = \lambda^k x - \epsilon x = (\lambda^k - \epsilon) x.
+    \end{equation*}
+    If $\lambda^k = a + b \i$, then $\lambda^k - \epsilon = (a - \epsilon) + b \i$ for some negative real number $a$ and some real number $b$.
+    By the definition of the Euclidean norm,
+    \begin{align*}
+      \|\lambda^k - \epsilon\| & = \|(a - \epsilon) + b \i \|_2 \\
+      & = \sqrt{(a - \epsilon)^2 + b^2} \\
+      & = \sqrt{a^2 - 2 \epsilon a + \epsilon^2 + b^2} \\
+      & > \sqrt{a^2 + 2 \epsilon + \epsilon^2 + b^2} \\
+      & = \sqrt{\epsilon (2 + \epsilon) + a^2 + b^2} \\
+      & > \sqrt{a^2 + b^2} \\
+      & = \| a + b \i \| \\
+      & = \| \lambda^k \|,
+    \end{align*}
+    where the first inequality is because $a$ is negative and the second is because $\epsilon$ is positive.
 
-        We know that the largest norm of any eigenvalue in $M$ is one, thus the largest norm of any eigenvalue in $M^k$ is 1, and furthermore the largest norm of any eigenvalue in $M^k - \epsilon$ is 1.
-        Therefore $\| \lambda^k - \epsilon \| \leq \| \lambda^k \| = 1$, but also $\| \lambda^k - \epsilon \| > \| \lambda^k \| = 1$ from the inequality above.
-        This is a contradiction, hence $\lambda$ must be a real positive number.
-      \item Not completed yet.
-      \end{enumerate}
+    We know that the largest norm of any eigenvalue in $M$ is one, thus the largest norm of any eigenvalue in $M^k$ is 1, and furthermore the largest norm of any eigenvalue in $M^k - \epsilon$ is 1.
+    Therefore $\| \lambda^k - \epsilon \| \leq \| \lambda^k \| = 1$, but also $\| \lambda^k - \epsilon \| > \| \lambda^k \| = 1$ from the inequality above.
+    This is a contradiction, hence $\lambda$ must be a real positive number.
+  \item Not completed yet.
+  \end{enumerate}
 
-    \item[3]
-      Let $H_1, \dotsc, H_k$ be the connected components of $G$.
-      Consider the set $S$ defined by $S = \{\1_{H_1}, \dotsc, \1_{H_k}\}$, where $\1_{H_i}$ is the characteristic vector on the vertices of $H_i$.
-      In order to prove that the $0$ eigenvalue of $L_G$ has multiplicity exactly $k$, we will prove that $S$ is a basis for the $0$-eigenspace (or in other words, the kernel of $L_G$).
-      Since the connected components induce a partition on the vertices of $G$, for each $i$ and $j$ in $[k]$ we have $\langle \1_{H_i}, \1_{H_j} \rangle = 0$, so each pair of vectors in $S$ is orthogonal.
-      Thus $S$ is a linearly independent set.
-      To show that $S$ spans the $0$-eigenspace, consider $\langle x, L_G x \rangle$.
-      By the definition of the Laplacian, $\langle x, L_G x \rangle = \sum_{(i, j) \in E(G)} (x_i - x_j)^2$.
-      Since $L_G x$ equals zero, so does $\langle x, L_G x \rangle$, and hence each addend $(x_i - x_j)^2$ must be zero.
-      In order to satisfy this equality, $x_i$ must equal $x_j$ for each $i$ and $j$ within the same connected component.
-      Thus $x$ is constant within each connected component.
-      In other words, $x = \sum_{i = 1}^k \alpha_i \1_{H_i}$ for some $\alpha_1, \dotsc, \alpha_k \in \R$.
+\item[3]
+  Let $H_1, \dotsc, H_k$ be the connected components of $G$.
+  Consider the set $S$ defined by $S = \{\1_{H_1}, \dotsc, \1_{H_k}\}$, where $\1_{H_i}$ is the characteristic vector on the vertices of $H_i$.
+  In order to prove that the $0$ eigenvalue of $L_G$ has multiplicity exactly $k$, we will prove that $S$ is a basis for the $0$-eigenspace (or in other words, the kernel of $L_G$).
+  Since the connected components induce a partition on the vertices of $G$, for each $i$ and $j$ in $[k]$ we have $\langle \1_{H_i}, \1_{H_j} \rangle = 0$, so each pair of vectors in $S$ is orthogonal.
+  Thus $S$ is a linearly independent set.
+  To show that $S$ spans the $0$-eigenspace, consider $\langle x, L_G x \rangle$.
+  By the definition of the Laplacian, $\langle x, L_G x \rangle = \sum_{(i, j) \in E(G)} (x_i - x_j)^2$.
+  Since $L_G x$ equals zero, so does $\langle x, L_G x \rangle$, and hence each addend $(x_i - x_j)^2$ must be zero.
+  In order to satisfy this equality, $x_i$ must equal $x_j$ for each $i$ and $j$ within the same connected component.
+  Thus $x$ is constant within each connected component.
+  In other words, $x = \sum_{i = 1}^k \alpha_i \1_{H_i}$ for some $\alpha_1, \dotsc, \alpha_k \in \R$.
 
-      Since we have shown that $S$ is linearly independent and spans the kernel of $L_G$, we conclude that the dimension of the kernel of $L_G$ is exactly $k$, so $L_G$ has exactly $k$ eigenvalues equal to $0$.
-    \item[11]
-      \begin{enumerate}
-      \item
-        The shortest path metric $D$ for $K_{2,3}$ can be expressed as a matrix:
-        \begin{equation*}
-          D =
-          \begin{bmatrix}
-            0 & 2 & 1 & 1 & 1 \\
-            2 & 0 & 1 & 1 & 1 \\
-            1 & 1 & 0 & 2 & 2 \\
-            1 & 1 & 2 & 0 & 2 \\
-            1 & 1 & 2 & 2 & 0
-          \end{bmatrix}
-          .
-        \end{equation*}
-        Assume for the sake of producing a contradiction that $D$ can be $\ell_1$-embedded isometrically.
-        Suppose $t$ is the dimension of the embedded space, and let $i \mapsto x_i$ be the mapping from vertices to points in $\R^t$.
-        Consider the embedding of the three vertices in the left vertex set, $x_3$, $x_4$, and $x_5$.
-        Any three points in $\R^t$ must be coplanar.
-        Since any isometric embedding is isomorphic up to rotation and translation in $\R^t$, we can assume without loss of generality that the three points lie on the plane corresponding to the first two components of the vectors and that they are centered around the origin.
-        Specifically, since each pair of these points must be at distance 2, we assume the three points $x_3$, $x_4$, and $x_5$ are the respective vertices of the triangle
-        \begin{equation*}
-          \begin{bmatrix}
-            1 \\ 0 \\ \0
-          \end{bmatrix},
-          \begin{bmatrix}
-            -1 \\ 0 \\ \0
-          \end{bmatrix},
-          \begin{bmatrix}
-            0 \\ 1 \\ \0
-          \end{bmatrix},
-        \end{equation*}
-        where $\0$ denotes the zero vector of dimension $t - 2$.
+  Since we have shown that $S$ is linearly independent and spans the kernel of $L_G$, we conclude that the dimension of the kernel of $L_G$ is exactly $k$, so $L_G$ has exactly $k$ eigenvalues equal to $0$.
 
-        The points $x_1$ and $x_2$ must each be at distance 1 from each of the other three points.
-        By solving the system of linear equations, we find that any vector at distance 1 from each of the other three points must be the all zeros vector of dimension $t$.
-        (The all zeros vector is the intersection of the $\ell_1$ unit hyperspheres in $\R^t$ centered at each of those three points.)
-        Since $x_1$ and $x_2$ must be at distance 2, which is strictly greater than zero, they cannot both be the all zeros vector (by the definition of a metric space).
-        Therefore we have achieved a contradiction: $x_1$ and $x_2$ are not both the same vector, but $x_1$ and $x_2$ must be the same vector.
+\item[4]
+  Since $G$ is a bipartite graph,
+  \begin{equation*}
+    A_G =
+    \begin{bmatrix}
+      O & B \\
+      B^T & O
+    \end{bmatrix}
+  \end{equation*}
+  for some matrix $B$, where $O$ denotes the all zeros matrix of the appropriate shape.
+  Suppose $\lambda$ is an eigenvalue of $A_G$ and $\begin{bmatrix}\mathbf{x} \\ \mathbf{y}\end{bmatrix}$ an eigenvector for $\lambda$.
+  We claim $-\lambda$ is an eigenvalue with eigenvector $\begin{bmatrix}\mathbf{x} \\ -\mathbf{y}\end{bmatrix}$.
+  For the former eigenvector, we have
+  \begin{align*}
+    \begin{bmatrix}
+      O & B \\
+      B^T & O
+    \end{bmatrix}
+    \begin{bmatrix}
+      \mathbf{x} \\ \mathbf{y}
+    \end{bmatrix}
+    =
+    \lambda
+    \begin{bmatrix}
+      \mathbf{x} \\ \mathbf{y}
+    \end{bmatrix}
+    & \iff
+    \begin{bmatrix}
+      B \mathbf{y} \\
+      B^T \mathbf{x}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      \lambda \mathbf{x} \\ \lambda \mathbf{y}
+    \end{bmatrix}
+    \\
+    & \iff
+    B \mathbf{y} = \lambda \mathbf{x} \text{ and } B \mathbf{x} = \lambda y.
+  \end{align*}
+  For the claimed eigenvector, we have
+  \begin{align*}
+    \begin{bmatrix}
+      O & B \\
+      B^T & O
+    \end{bmatrix}
+    \begin{bmatrix}
+      \mathbf{x} \\ -\mathbf{y}
+    \end{bmatrix}
+    =
+    -\lambda
+    \begin{bmatrix}
+      \mathbf{x} \\ -\mathbf{y}
+    \end{bmatrix}
+    & \iff
+    \begin{bmatrix}
+      -B \mathbf{y} \\
+      B^T \mathbf{x}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+      -\lambda \mathbf{x} \\ \lambda \mathbf{y}
+    \end{bmatrix}
+    \\
+    & \iff
+    -B \mathbf{y} = -\lambda \mathbf{x} \text{ and } B \mathbf{x} = \lambda y \\
+    & \iff
+    B \mathbf{y} = \lambda \mathbf{x} \text{ and } B \mathbf{x} = \lambda y.
+  \end{align*}
+  By combining both chains of biconditionals, we conclude that $\lambda$ is an eigenvalue of $A_G$ if and only if $-\lambda$ is an eigenvalue of $A_G$.
 
-      \item
-        Our embedding will be in $\R^3$\kern-0.4em.
-        We again embed the vertices $3$, $4$, and $5$ in a triangle whose vertices, $x_3$, $x_4$, and $x_5$, are as close as possible in order to allow us more room to place the remaining two points.
-        We choose the points
-        \begin{equation*}
-          \begin{bmatrix}
-            3/4 \\ 0 \\ 0
-          \end{bmatrix},
-          \begin{bmatrix}
-            -3/4 \\ 0 \\ 0
-          \end{bmatrix}, \text{ and }
-          \begin{bmatrix}
-            0 \\ 3/4 \\ 0
-          \end{bmatrix}.
-        \end{equation*}
-        The distance between each pair of these points is $6/4$, which is $3 / 4$ of the shortest path distance.
-        Now the intersection of the $\ell_1$ balls of radius $4/3$ centered at each of the three points defines a closed octahedron.
-        Each point in the octahedron is within an acceptable distance to each of the three points of the triangle.
-        Since $x_1$ and $x_2$ must be far from each other, we choose the vertices of the octahedron directly above and below the origin:
-        \begin{equation*}
-          \begin{bmatrix}
-            0 \\ 0 \\ 3/4
-          \end{bmatrix},
-          \begin{bmatrix}
-            0 \\ 0 \\ -3/4
-          \end{bmatrix}
-        \end{equation*}
-        Now the distance between $x_1$ and $x_2$ is $6/4$, which is again $3/4$ of the shortest path distance between their corresponding graph vertices.
-      \end{enumerate}
-    \end{enumerate}
+\item[7]
+  Instead of $n_1$ and $n_2$, I will use the variables $m$ and $n$ to denote the number of vertices in the left and right vertex sets of the bipartite graph, respectively.
+  The adjacency matrix $A$, degree matrix $D$, Laplacian $L$, and normalized Laplacian $\L$ of the complete bipartite graph on $m + n$ vertices are as follows.
+  \begin{align*}
+    A & =
+    \begin{bmatrix}
+      O & J_{m \times n} \\
+      J_{n \times m} & O
+    \end{bmatrix}
+    \\
+    D & =
+    \begin{bmatrix}
+      n I_{m \times m} & O \\
+      O & m I_{n \times n}
+    \end{bmatrix}
+    \\
+    L & = D - A =
+    \begin{bmatrix}
+      n I_{m \times m} & -J_{m \times n} \\
+      -J_{n \times m} & m I_{n \times n}
+    \end{bmatrix}
+    \\
+    \L & = I - D^{-1 / 2} A D^{-1 / 2} =
+    \begin{bmatrix}
+      I_{m \times m} & -\frac{1}{\sqrt{n m}} J_{m \times n} \\
+      -\frac{1}{\sqrt{m n}} J_{n \times m} & I_{n \times n}
+    \end{bmatrix}
+  \end{align*}
+  From the lecture notes, we know that the normalized Laplacian of a connected graph has exactly one $0$-eigenvalue, and the normalized Laplacian of a bipartite graph has a $2$-eigenvalue.
+  By \autocite[Theorem~3.11]{lgs14} the second smallest eigenvalue of $\L$ is $1$, and by \autocite[Theorem~3.12]{lgs14} the second largest eigenvalue of $\L$ is also $1$.
+  Thus the eigenvalues are $0$ with multiplicity one, $1$ with multiplicity $m + n - 2$, and $2$ with multiplicity one.
 
-    %% Print the bibliography section here.
-    \printbibliography
+  Now it remains to determine the eigenvectors.
+  \begin{itemize}
+  \item The $0$-eigenvector is $D^{1 / 2} \1$ for the normalized Laplacian of any connected graph.
+  \item The $2$-eigenvector is $\begin{bmatrix} \phantom{-} \sqrt{n} \1_m \\ - \sqrt{m} \1_n \end{bmatrix}$, where $\1_s$ denotes the all ones vector of dimension $s$.
+    This can be verified through direct computation.
+  \item
+    The $1$-eigenspace has dimension $m + n - 2$ and is composed of all vectors $\begin{bmatrix} \mathbf{x} \\ \mathbf{y} \end{bmatrix}$ such that (1) $\mathbf{x} \perp \1_m$ and $\mathbf{y} \perp \1_n$, and (2) $\mathbf{x} \perp \sqrt{n} \1_m$ and $\mathbf{y} \perp -\sqrt{m} \1_n$.
+  \end{itemize}
+\item[11]
+  \begin{enumerate}
+  \item
+    The shortest path metric $D$ for $K_{2,3}$ can be expressed as a matrix:
+    \begin{equation*}
+      D =
+      \begin{bmatrix}
+        0 & 2 & 1 & 1 & 1 \\
+        2 & 0 & 1 & 1 & 1 \\
+        1 & 1 & 0 & 2 & 2 \\
+        1 & 1 & 2 & 0 & 2 \\
+        1 & 1 & 2 & 2 & 0
+      \end{bmatrix}
+      .
+    \end{equation*}
+    Assume for the sake of producing a contradiction that $D$ can be $\ell_1$-embedded isometrically.
+    Suppose $t$ is the dimension of the embedded space, and let $i \mapsto x_i$ be the mapping from vertices to points in $\R^t$.
+    Consider the embedding of the three vertices in the left vertex set, $x_3$, $x_4$, and $x_5$.
+    Any three points in $\R^t$ must be coplanar.
+    Since any isometric embedding is isomorphic up to rotation and translation in $\R^t$, we can assume without loss of generality that the three points lie on the plane corresponding to the first two components of the vectors and that they are centered around the origin.
+    Specifically, since each pair of these points must be at distance 2, we assume the three points $x_3$, $x_4$, and $x_5$ are the respective vertices of the triangle
+    \begin{equation*}
+      \begin{bmatrix}
+        1 \\ 0 \\ \0
+      \end{bmatrix},
+      \begin{bmatrix}
+        -1 \\ 0 \\ \0
+      \end{bmatrix},
+      \begin{bmatrix}
+        0 \\ 1 \\ \0
+      \end{bmatrix},
+    \end{equation*}
+    where $\0$ denotes the zero vector of dimension $t - 2$.
 
-    \end{document}
+    The points $x_1$ and $x_2$ must each be at distance 1 from each of the other three points.
+    By solving the system of linear equations, we find that any vector at distance 1 from each of the other three points must be the all zeros vector of dimension $t$.
+    (The all zeros vector is the intersection of the $\ell_1$ unit hyperspheres in $\R^t$ centered at each of those three points.)
+    Since $x_1$ and $x_2$ must be at distance 2, which is strictly greater than zero, they cannot both be the all zeros vector (by the definition of a metric space).
+    Therefore we have achieved a contradiction: $x_1$ and $x_2$ are not both the same vector, but $x_1$ and $x_2$ must be the same vector.
+
+  \item
+    Our embedding will be in $\R^3$\kern-0.4em.
+    We again embed the vertices $3$, $4$, and $5$ in a triangle whose vertices, $x_3$, $x_4$, and $x_5$, are as close as possible in order to allow us more room to place the remaining two points.
+    We choose the points
+    \begin{equation*}
+      \begin{bmatrix}
+        3/4 \\ 0 \\ 0
+      \end{bmatrix},
+      \begin{bmatrix}
+        -3/4 \\ 0 \\ 0
+      \end{bmatrix}, \text{ and }
+      \begin{bmatrix}
+        0 \\ 3/4 \\ 0
+      \end{bmatrix}.
+    \end{equation*}
+    The distance between each pair of these points is $6/4$, which is $3 / 4$ of the shortest path distance.
+    Now the intersection of the $\ell_1$ balls of radius $4/3$ centered at each of the three points defines a closed octahedron.
+    Each point in the octahedron is within an acceptable distance to each of the three points of the triangle.
+    Since $x_1$ and $x_2$ must be far from each other, we choose the vertices of the octahedron directly above and below the origin:
+    \begin{equation*}
+      \begin{bmatrix}
+        0 \\ 0 \\ 3/4
+      \end{bmatrix},
+      \begin{bmatrix}
+        0 \\ 0 \\ -3/4
+      \end{bmatrix}
+    \end{equation*}
+    Now the distance between $x_1$ and $x_2$ is $6/4$, which is again $3/4$ of the shortest path distance between their corresponding graph vertices.
+  \end{enumerate}
+\end{enumerate}
+
+%% Print the bibliography section here.
+\printbibliography
+
+\end{document}
