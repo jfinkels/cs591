@@ -191,9 +191,17 @@
 
     Before we prove this, we show that
     \begin{equation*}
-      \sqrt{\frac{d_j}{d_i}} e^{-t \lambda_1} \e_j^T v_1 v_1^T \e_j = \pi_j.
+      \sqrt{\frac{d_j}{d_i}} e^{-t \lambda_1} \e_i^T v_1 v_1^T \e_j = \pi_j.
     \end{equation*}
-    \todo{Fill me in}
+    By construction, $\pi_j = d_j / \1^T D \1$.
+    Since the first eigenvalue of $L$ is zero with eigenvector $\1$, the first eigenvalue of $\L$ is zero as well, with eigenvector $D^{\frac{1}{2}} \1$.
+    Thus
+    \begin{align*}
+      \sqrt{\frac{d_j}{d_i}} e^{-t \lambda_1} \e_i^T v_1 v_1^T \e_j & = \sqrt{\frac{d_j}{d_i}} e^{-t (0)} \e_i^T (D^{\frac{1}{2}} \1) (D^{\frac{1}{2}} \1)^T \e_j \\
+      & = \sqrt{\frac{d_j}{d_i}} \sqrt{d_i} \sqrt{d_j} \\
+      & = d_j.
+    \end{align*}
+    \todo{We are off by a factor of $\1^T D \1$ here.}
 
     By parts (a) and (b),
     \begin{align*}
