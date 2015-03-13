@@ -1,0 +1,282 @@
+%% hw1-2.tex - CS 591 Homework 1, part 2.
+%%
+%% Copyright 2015 Jeffrey Finkelstein.
+%%
+%% This LaTeX markup document is made available under the terms of the Creative
+%% Commons Attribution-ShareAlike 4.0 International License,
+%% https://creativecommons.org/licenses/by-sa/4.0/.
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+%% This must come before hyperref.
+\usepackage{amsthm}
+%% This is strongly recommended by biblatex.
+\usepackage[english]{babel}
+\usepackage[backend=biber]{biblatex}
+\usepackage[T1]{fontenc}
+%% This must come before csquotes.
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+%% This is strongly recommended by biblatex.
+\usepackage{csquotes}
+%% This must come before hyperref.
+\usepackage{thmtools}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+%% Set the amount by which certain characters protrude into the margins.
+%%
+%% \LoadMicrotypeFile{cmr}
+%%
+%%     This command forces the built-in protrusion settings for the Computer
+%%     Modern Roman (cmr) font family to become available at this point, so
+%%     that we can override these settings on the next line. Even though we are
+%%     really using the Latin Modern Roman (lmr) fonts, microtype uses the cmr
+%%     configuration file.
+%%
+%% \SetProtrusion
+%%
+%%     This instructs the microtype package that we are going to modify the
+%%     protrusion settings.
+%%
+%% [load=lmr-T1]
+%%
+%%     Loads the Type 1 (T1) encoding of the lmr font family, thereby setting
+%%     the default protrusion values for all the characters. This is only
+%%     possible after the \LoadMicrotypeFile{cmr} command (microtype
+%%     essentially considers lmr to be an alias for cmr).
+%%
+%% {encoding=T1, family=lmr}
+%%
+%%     Indicates that we are going to modify the protrusion values for the T1
+%%     encoding of the lmr font family.
+%%
+%% \textquotedblright = {,1000} (and similar commands)
+%%
+%%     Force the character given by \textquotedblright to have default
+%%     protrusion on the left margin (given by an empty string before the
+%%     comma) and full protrusion (that is, protrusion value 1000) on the right
+%%     margin.
+\LoadMicrotypeFile{cmr}
+\SetProtrusion
+    [load=lmr-T1]
+    {encoding=T1, family=lmr}
+    {
+      \textquotedblright = {,1000},
+      \textquotedblleft = {1000,},
+      {'} = {,1000},
+      {,} = {,1000},
+      {:} = {,1000},
+      {;} = {,1000},
+      {.} = {,1000}
+    }
+
+%% Set the title and author of the PDF file.
+\hypersetup{pdftitle={Homework 1, part 2}, pdfauthor={Jeffrey Finkelstein}}
+
+%% Declare the bibliography file.
+\addbibresource{hw1-2.bib}
+
+%% Declare theorem-like environments.
+\declaretheorem[numberwithin=section]{theorem}
+
+%% Custom commands are declared here.
+\newcommand{\todo}[1]{\textbf{TODO #1}}
+%\newcommand{\R}{\mathbb{R}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\e}{\mathbf{e}}
+\renewcommand{\L}{\mathcal{L}}
+%\DeclareMathOperator{\tr}{tr}
+
+%% Define the author, title, and date for the document.
+\author{Jeffrey~Finkelstein}
+\title{Homework 1, part 2}
+
+\begin{document}
+
+\maketitle
+
+%% Document content goes here.
+\begin{enumerate}
+\item[5]
+  \begin{enumerate}
+  \item
+    We have
+    \begin{equation*}
+      e^{-t(I - W)} = e^{-t} \sum_{i = 0}^\infty \frac{t^i W^i}{i!} = e^{-t} \sum_{i = 0}^\infty \frac{t^i (D^{\frac{1}{2}} N D^{-\frac{1}{2}})^i}{i!}
+    \end{equation*}
+    and
+    \begin{equation*}
+      D^{\frac{1}{2}} e^{-tN} D^{-\frac{1}{2}} = e^{-t} \sum_{i = 0}^\infty \frac{t^i D^{\frac{1}{2}} N^i D^{-\frac{1}{2}}}{i!}.
+    \end{equation*}
+    Now it suffices to show that $(D^{\frac{1}{2}} N D^{-\frac{1}{2}})^i = D^{\frac{1}{2}} N^i D^{-\frac{1}{2}}$ for each natural number $i$.
+    We prove this by induction on $i$.
+    For the base case, if $i = 0$, both sides of the equation equal $I$.
+    For the inductive step, suppose the equation holds for $i$.
+    Then
+    \begin{align*}
+      (D^{\frac{1}{2}} N D^{-\frac{1}{2}})^{i + 1} & = (D^{\frac{1}{2}} N D^{-\frac{1}{2}}) (D^{\frac{1}{2}} N D^{-\frac{1}{2}})^i \\
+      & = (D^{\frac{1}{2}} N D^{-\frac{1}{2}}) (D^{\frac{1}{2}} N^i D^{-\frac{1}{2}}) \\
+      & = D^{\frac{1}{2}} N N^i D^{-\frac{1}{2}} \\
+      & = D^{\frac{1}{2}} N^{i + 1} D^{-\frac{1}{2}}.
+    \end{align*}
+    This concludes the proof.
+  \item
+    First, since the eigenvector decomposition forms an orthonormal basis, each $v_i$ satisfies $v_i^T v_i = 1$.
+    Hence by induction on $j$, we have $(v_i v_i^T)^j = v_i v_i^T$.
+    Now
+    \begin{align*}
+      e^A & = e^{\sum_{i = 1}^n \rho_i v_i v_i^T} \\
+      & = \prod_{i = 1}^n e^{\rho_i v_i v_i^T} \\
+      & = \prod_{i = 1}^n \sum_{j = 1}^\infty \frac{(\rho_i v_i v_i^T)^j}{j!} \\
+      & = \prod_{i = 1}^n \sum_{j = 1}^\infty \frac{\rho_i^j v_i v_i^T}{j!} \\
+      & = \prod_{i = 1}^n v_i v_i^T \sum_{j = 1}^\infty \frac{\rho_i^j}{j!} \\
+      & = \prod_{i = 1}^n v_i v_i^T e^{\rho_i} \\
+      & = \prod_{i = 1}^n e^{\rho_i} v_i v_i^T
+    \end{align*}
+    \todo{This should be a sum, not a product.}
+  \item
+    (In this proof, the symbol $e$ denotes Euler's constant and the symbol $\e_i$ denotes the $i$th standard basis vector.)
+    Our goal is to show
+    \begin{equation*}
+      \left|\e_j^T H_t \e_i - \pi_j\right| \leq \sqrt{\frac{d_j}{d_i}} e^{-t \nu_2},
+    \end{equation*}
+    where $H_t$ is the heat kernel random walk matrix with mean $t$, the vector $\pi$ is the stationary distribution for $H_t$, and $\nu_2$ is the second eigenvalue of the normalized adjacency matrix.
+
+    Before we prove this, we show that
+    \begin{equation*}
+      \sqrt{\frac{d_j}{d_i}} e^{-t \nu_1} \e_j^T v_1 v_1^T \e_j = \pi_j.
+    \end{equation*}
+    \todo{Fill me in}
+
+    By parts (a) and (b),
+    \begin{align*}
+      \e_j^T H_t \e_i &= \e_j^T D^{\frac{1}{2}} e^{-t N} D^{-\frac{1}{2}} \e_i \\
+      & = d_j^{\frac{1}{2}} \e_j^T e^{-t N} d_i^{-\frac{1}{2}} \e_i \\
+      & = \sqrt{\frac{d_j}{d_i}} \e_j^T e^{-t N} \e_i \\
+      & = \sqrt{\frac{d_j}{d_i}} \e_j^T (\sum_{k = 1}^n e^{-t \nu_k} v_k v_k^T) \e_i \\
+      & = \sqrt{\frac{d_j}{d_i}} \sum_{k = 1}^n e^{-t \nu_k} \e_j^T v_k v_k^T \e_i \\
+       & = \sqrt{\frac{d_j}{d_i}} e^{-t \nu_1} \e_j^T v_1 v_1^T \e_i + \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \nu_k} \e_j^T v_k v_k^T \e_i.
+    \end{align*}
+    By the lemma above,
+    \begin{equation*}
+      \sqrt{\frac{d_j}{d_i}} e^{-t \nu_1} \e_j^T v_1 v_1^T \e_j = \pi_j,
+    \end{equation*}
+    so it suffices to show that
+    \begin{equation*}
+      \left|\sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \nu_k} \e_j^T v_k v_k^T \e_i\right| \leq \sqrt{\frac{d_j}{d_i}} e^{-t \nu_2}.
+    \end{equation*}
+    To this end,
+    \begin{align*}
+      \left|\sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \nu_k} \e_j^T v_k v_k^T \e_i\right| & \leq \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n \left|e^{-t \nu_k} \e_j^T v_k v_k^T \e_i\right| \\
+      & = \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \nu_k} \left|\e_j^T v_k\right| \left|v_k^T \e_i\right| \\
+      & \leq \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \nu_2} \left|\e_j^T v_k\right| \left|v_k^T \e_i\right| \\
+      & = \sqrt{\frac{d_j}{d_i}} e^{-t \nu_2} \sum_{k = 2}^n \left|\e_j^T v_k\right| \left|v_k^T \e_i\right|,
+    \end{align*}
+    where the first inequality follows from the triangle inequality and the second from the fact that the $\nu_i$ are decreasing \todo{increasing?}.
+    Now we need only show that the summation is at most one.
+    Let $V$ denote the $n \times n$ matrix whose columns are the eigenvectors $v_i$ and let $V_i$ denote the $i$th \emph{row} of $V$.
+    Since the eigenvectors form an orthonormal basis, $V$ is an orthonormal matrix, so each column and each row must be orthonormal.
+    Specifically, $\|V_i\|_2 = 1$ for each $i$.
+    Now, using the Cauchy--Schwarz inequality, we have
+    \begin{align*}
+      \sum_{k = 2}^n \left|\e_j^T v_k\right| \left|v_k^T \e_i\right| & \leq
+      \sum_{k = 1}^n \left|\e_j^T v_k\right| \left|v_k^T \e_i\right| \\
+      & \leq \sqrt{\sum_{k = 1}^n (\e_j^T v_k)^2} \sqrt{\sum_{k = 1}^n (v_k^T \e_i)^2} \\
+      & = \|V_j\|_2 \cdot \|V_i\|_2 \\
+      & = 1 \cdot 1 \\
+      & = 1.
+    \end{align*}
+  \item
+    (In this proof, the symbol $P$ denotes the personalized page-rank random walk transition matrix with parameter $\alpha$.)
+    First, by the same induction as in part (a), we have
+    \begin{equation*}
+      P = \alpha D^{\frac{1}{2}} \left(\sum_{\ell = 0}^\infty (1 - \alpha)^\ell N^\ell\right) D^{-\frac{1}{2}}.
+    \end{equation*}
+    Next, if $v$ is an eigenvector of eigenvalue $\lambda$ for matrix $A$, then $v$ is an eigenvector of eigenvalue $\lambda^\ell$ for matrix $A^\ell$.
+    Thus substituting $N^\ell$ with its spectral decomposition yields
+    \begin{equation*}
+      P = \alpha D^{\frac{1}{2}} \left(\sum_{\ell = 0}^\infty (1 - \alpha)^\ell \sum_{k = 1}^n \nu^\ell_k v_k v_k^T \right) D^{-\frac{1}{2}}.
+    \end{equation*}
+    \todo{Fill me in.}
+  \end{enumerate}
+\item[8]
+  \begin{enumerate}
+  \item
+    Consider the quadratic form of the Laplacian, $x^T L_G x$.
+    By definition of the Laplacian, for any vector $x$,
+    \begin{equation*}
+      x^T L_G x = \sum_{(i, j) \in E(G)} (x_i - x_j)^2.
+    \end{equation*}
+    For any routing of $G$ into $H$, we have
+    \begin{equation*}
+      \sum_{(i, j) \in E(G)} (x_i - x_j)^2 = \sum_{(i, j) \in E(G)} \sum_{(u, v) \in p_{ij}} (x_u - x_v)^2,
+    \end{equation*}
+    where $p_{ij}$ is the path in $H$ over which the edge $(i, j)$ in $G$ is routed.
+    By expanding this double summation, we see that each edge $(u, v)$ in $H$ appears in a path $p_{ij}$ at most $C$ times, and each path has length at most $\ell$, so
+    \begin{equation*}
+      \sum_{(i, j) \in E(G)} \sum_{(u, v) \in p_{ij}} (x_u - x_v)^2 \leq \sum_{(u, v) \in E(H)} C \ell (x_u - x_v)^2 = x^T C \ell L_H x.
+    \end{equation*}
+    Thus we conclude that $x_T L_G x \leq x^T C \ell L_H x$, and hence $G \preceq C \ell H$.
+  \item
+    Consider an arbitrary routing of $P_2$ into $P_n$.
+    The congestion of this routing must be one, since any edge in $P_n$ appears in at most one routed path.
+    The dilation of this routing must be at most $n$, since the length of any path in $P_n$ is at most $n$.
+    Thus, by part (a), $L_{P_2} \preceq 1 \cdot n \cdot L_{P_n} = n L_{P_n}$.
+  \item
+    Since $T_d$ is a tree, there is a unique path joining each pair of vertices.
+    Consider the routing in which each edge $(i, j)$ in $K_n$ is routed through the unique path joining $i$ and $j$ in $T_d$.
+    The maximum length of any path in $T_d$ is $2d$ (with equality for a path joining a leaf in the left subtree to a leaf in the right subtree).
+    The most congested edges in this routing are the two edges incident to the root, since each one of these edges participates not only in the paths whose source or target is the root, but also all paths joining a vertex in the left subtree to one in the right subtree.
+
+    Since the tree and the routing are symmetric, without loss of generality we consider only the edge joining the root to its left subtree.
+    There are $(n - 1) / 2$ paths joining the root to a vertex in the left subtree (one for each vertex in that subtree).
+    There are $((n - 1) / 2)^2$ paths joining a vertex in the left subtree to a vertex in the right (up to symmetry).
+    Thus the total congestion on the edge incident to the root is the sum of these two expressions, which equals $(n^2 - 1) / 4$.
+
+    By part (a), we have
+    \begin{equation*}
+      L_{K_n} \preceq 2d \left(\frac{n^2 - 1}{4}\right) L_{T_d}.
+    \end{equation*}
+    Since $n = 2^{d + 1} - 1$, we have $d = \log(n + 1) - 1$, so
+    \begin{equation*}
+      L_{K_n} \preceq 2 (\log(n + 1) - 1) \left(\frac{n^2 - 1}{4}\right) L_{T_d}.
+    \end{equation*}
+    Asymptotically, this means
+    \begin{equation*}
+      L_{K_n} \preceq O(n^2 \log n) L_{T_d},
+    \end{equation*}
+    and hence
+    \begin{equation*}
+      \frac{\Omega(1)}{n^2 \log n} L_{K_n} \preceq L_{T_d}.
+    \end{equation*}
+
+    By definition of the positive semidefinite partial order, for any real vector $x$,
+    \begin{equation*}
+      \frac{\Omega(1)}{n^2 \log n} x^T L_{K_n} x \leq x^T L_{T_d} x,
+    \end{equation*}
+    and after normalizing by $x^T x$,
+    \begin{equation*}
+      \frac{\Omega(1)}{n^2 \log n} \frac{x^T L_{K_n} x}{x^T x} \leq \frac{x^T L_{T_d} x}{x^T x}.
+    \end{equation*}
+    In particular,
+    \begin{equation*}
+      \min_{x \perp \1} \frac{\Omega(1)}{n^2 \log n} \frac{x^T L_{K_n} x}{x^T x} \leq \min_{x \perp \1} \frac{x^T L_{T_d} x}{x^T x},
+    \end{equation*}
+    and therefore
+    \begin{equation*}
+      \frac{\Omega(1)}{n^2 \log n} \lambda_2(L_{K_n}) \leq \lambda_2(L_{T_d}).
+    \end{equation*}
+    The second eigenvalue of the Laplacian of the complete graph on $n$ vertices is $n$, so
+    \begin{equation*}
+      \frac{\Omega(1)}{n \log n} = \frac{\Omega(1)}{n^2 \log n} n \leq \lambda_2(L_{T_d}).
+    \end{equation*}
+  \end{enumerate}
+\end{enumerate}
+
+%% Print the bibliography section here.
+%\printbibliography
+
+\end{document}
