@@ -185,41 +185,41 @@
     (In this proof, the symbol $e$ denotes Euler's constant and the symbol $\e_i$ denotes the $i$th standard basis vector.)
     Our goal is to show
     \begin{equation*}
-      \left|\e_j^T H_t \e_i - \pi_j\right| \leq \sqrt{\frac{d_j}{d_i}} e^{-t \nu_2},
+      \left|\e_j^T H_t \e_i - \pi_j\right| \leq \sqrt{\frac{d_j}{d_i}} e^{-t \lambda_2},
     \end{equation*}
-    where $H_t$ is the heat kernel random walk matrix with mean $t$, the vector $\pi$ is the stationary distribution for $H_t$, and $\nu_2$ is the second eigenvalue of the normalized adjacency matrix.
+    where $H_t$ is the heat kernel random walk matrix with mean $t$, the vector $\pi$ is the stationary distribution for $H_t$, and $\lambda_2$ is the second eigenvalue of the normalized adjacency matrix.
 
     Before we prove this, we show that
     \begin{equation*}
-      \sqrt{\frac{d_j}{d_i}} e^{-t \nu_1} \e_j^T v_1 v_1^T \e_j = \pi_j.
+      \sqrt{\frac{d_j}{d_i}} e^{-t \lambda_1} \e_j^T v_1 v_1^T \e_j = \pi_j.
     \end{equation*}
     \todo{Fill me in}
 
     By parts (a) and (b),
     \begin{align*}
-      \e_j^T H_t \e_i &= \e_j^T D^{\frac{1}{2}} e^{-t N} D^{-\frac{1}{2}} \e_i \\
-      & = d_j^{\frac{1}{2}} \e_j^T e^{-t N} d_i^{-\frac{1}{2}} \e_i \\
-      & = \sqrt{\frac{d_j}{d_i}} \e_j^T e^{-t N} \e_i \\
-      & = \sqrt{\frac{d_j}{d_i}} \e_j^T (\sum_{k = 1}^n e^{-t \nu_k} v_k v_k^T) \e_i \\
-      & = \sqrt{\frac{d_j}{d_i}} \sum_{k = 1}^n e^{-t \nu_k} \e_j^T v_k v_k^T \e_i \\
-       & = \sqrt{\frac{d_j}{d_i}} e^{-t \nu_1} \e_j^T v_1 v_1^T \e_i + \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \nu_k} \e_j^T v_k v_k^T \e_i.
+      \e_j^T H_t \e_i &= \e_j^T D^{\frac{1}{2}} e^{-t \L} D^{-\frac{1}{2}} \e_i \\
+      & = d_j^{\frac{1}{2}} \e_j^T e^{-t \L} d_i^{-\frac{1}{2}} \e_i \\
+      & = \sqrt{\frac{d_j}{d_i}} \e_j^T e^{-t \L} \e_i \\
+      & = \sqrt{\frac{d_j}{d_i}} \e_j^T (\sum_{k = 1}^n e^{-t \lambda_k} v_k v_k^T) \e_i \\
+      & = \sqrt{\frac{d_j}{d_i}} \sum_{k = 1}^n e^{-t \lambda_k} \e_j^T v_k v_k^T \e_i \\
+       & = \sqrt{\frac{d_j}{d_i}} e^{-t \lambda_1} \e_j^T v_1 v_1^T \e_i + \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \lambda_k} \e_j^T v_k v_k^T \e_i.
     \end{align*}
     By the lemma above,
     \begin{equation*}
-      \sqrt{\frac{d_j}{d_i}} e^{-t \nu_1} \e_j^T v_1 v_1^T \e_j = \pi_j,
+      \sqrt{\frac{d_j}{d_i}} e^{-t \lambda_1} \e_j^T v_1 v_1^T \e_j = \pi_j,
     \end{equation*}
     so it suffices to show that
     \begin{equation*}
-      \left|\sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \nu_k} \e_j^T v_k v_k^T \e_i\right| \leq \sqrt{\frac{d_j}{d_i}} e^{-t \nu_2}.
+      \left|\sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \lambda_k} \e_j^T v_k v_k^T \e_i\right| \leq \sqrt{\frac{d_j}{d_i}} e^{-t \lambda_2}.
     \end{equation*}
     To this end,
     \begin{align*}
-      \left|\sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \nu_k} \e_j^T v_k v_k^T \e_i\right| & \leq \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n \left|e^{-t \nu_k} \e_j^T v_k v_k^T \e_i\right| \\
-      & = \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \nu_k} \left|\e_j^T v_k\right| \left|v_k^T \e_i\right| \\
-      & \leq \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \nu_2} \left|\e_j^T v_k\right| \left|v_k^T \e_i\right| \\
-      & = \sqrt{\frac{d_j}{d_i}} e^{-t \nu_2} \sum_{k = 2}^n \left|\e_j^T v_k\right| \left|v_k^T \e_i\right|,
+      \left|\sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \lambda_k} \e_j^T v_k v_k^T \e_i\right| & \leq \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n \left|e^{-t \lambda_k} \e_j^T v_k v_k^T \e_i\right| \\
+      & = \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \lambda_k} \left|\e_j^T v_k\right| \left|v_k^T \e_i\right| \\
+      & \leq \sqrt{\frac{d_j}{d_i}} \sum_{k = 2}^n e^{-t \lambda_2} \left|\e_j^T v_k\right| \left|v_k^T \e_i\right| \\
+      & = \sqrt{\frac{d_j}{d_i}} e^{-t \lambda_2} \sum_{k = 2}^n \left|\e_j^T v_k\right| \left|v_k^T \e_i\right|,
     \end{align*}
-    where the first inequality follows from the triangle inequality and the second from the fact that the $\nu_i$ are decreasing \todo{increasing?}.
+    where the first inequality follows from the triangle inequality and the second from the fact that the $\lambda_i$ are increasing (so the negative eigenvalues are decreasing).
     Now we need only show that the summation is at most one.
     Let $V$ denote the $n \times n$ matrix whose columns are the eigenvectors $v_i$ and let $V_i$ denote the $i$th \emph{row} of $V$.
     Since the eigenvectors form an orthonormal basis, $V$ is an orthonormal matrix, so each column and each row must be orthonormal.
@@ -235,16 +235,18 @@
     \end{align*}
   \item
     (In this proof, the symbol $P$ denotes the personalized page-rank random walk transition matrix with parameter $\alpha$.)
-    First, by the same induction as in part (a), we have
+    Since $\L = I - N$, it suffices to show the bound for $1 - \nu_2$ instead of $\lambda_2$.
+
+    First, by an induction similar to the one in part (a), we have
     \begin{equation*}
       P = \alpha D^{\frac{1}{2}} \left(\sum_{\ell = 0}^\infty (1 - \alpha)^\ell N^\ell\right) D^{-\frac{1}{2}}.
     \end{equation*}
-    Next, if $v$ is an eigenvector of eigenvalue $\lambda$ for matrix $A$, then $v$ is an eigenvector of eigenvalue $\lambda^\ell$ for matrix $A^\ell$.
+    Next, if $v$ is an eigenvector of eigenvalue $\nu$ for a matrix $A$, then $v$ is an eigenvector of eigenvalue $\nu^\ell$ for matrix $A^\ell$.
     Thus substituting $N^\ell$ with its spectral decomposition yields
     \begin{equation*}
-      P = \alpha D^{\frac{1}{2}} \left(\sum_{\ell = 0}^\infty (1 - \alpha)^\ell \sum_{k = 1}^n \nu^\ell_k v_k v_k^T \right) D^{-\frac{1}{2}}.
+      P = \alpha D^{\frac{1}{2}} \left(\sum_{\ell = 0}^\infty (1 - \alpha)^\ell \sum_{k = 1}^n \nu_k^\ell v_k v_k^T \right) D^{-\frac{1}{2}}.
     \end{equation*}
-    \todo{Fill me in.}
+    \todo{I'm not sure where to go from here.}
   \end{enumerate}
 \item[8]
   \begin{enumerate}
