@@ -146,30 +146,25 @@
   \begin{enumerate}
   \item
     By substituting the definitions of the random walk matrix, the normalized random walk matrix, and the normalized Laplacian in the appropriate places, we have $I - W = D^{\frac{1}{2}} \L D^{-\frac{1}{2}}$.
-    Hence
-    \begin{equation*}
-      e^{-t(I - W)} = e^{-t D^{\frac{1}{2}} \L D^{-\frac{1}{2}}} = \sum_{i = 0}^\infty \frac{t^i (D^{\frac{1}{2}} \L D^{-\frac{1}{2}})}{i!}.
-    \end{equation*}
+    If we assume for now that $(D^{\frac{1}{2}} \L D^{-\frac{1}{2}})^i = D^{\frac{1}{2}} \L^i D^{-\frac{1}{2}}$, then we have the following sequence of equalities.
+    \begin{align*}
+      e^{-t(I - W)} & = e^{-t D^{\frac{1}{2}} \L D^{-\frac{1}{2}}} \\
+      & = \sum_{i = 0}^\infty \frac{(-t)^i (D^{\frac{1}{2}} \L D^{-\frac{1}{2}})^i}{i!} \\
+      & = \sum_{i = 0}^\infty \frac{(-t)^i D^{\frac{1}{2}} \L^i D^{-\frac{1}{2}}}{i!} \\
+      & = D^{\frac{1}{2}} \left(\sum_{i = 0}^\infty \frac{(-t)^i \L^i}{i!}\right) D^{-\frac{1}{2}} \\
+      & = D^{\frac{1}{2}} e^{-t \L} D^{-\frac{1}{2}}
+    \end{align*}
 
-
-
-    \begin{equation*}
-      e^{-t(I - W)} = e^{-t} \sum_{i = 0}^\infty \frac{t^i W^i}{i!} = e^{-t} \sum_{i = 0}^\infty \frac{t^i (D^{\frac{1}{2}} N D^{-\frac{1}{2}})^i}{i!}
-    \end{equation*}
-    and
-    \begin{equation*}
-      D^{\frac{1}{2}} e^{-tN} D^{-\frac{1}{2}} = e^{-t} \sum_{i = 0}^\infty \frac{t^i D^{\frac{1}{2}} N^i D^{-\frac{1}{2}}}{i!}.
-    \end{equation*}
-    Now it suffices to show that $(D^{\frac{1}{2}} N D^{-\frac{1}{2}})^i = D^{\frac{1}{2}} N^i D^{-\frac{1}{2}}$ for each natural number $i$.
+    Now it suffices to show that $(D^{\frac{1}{2}} \L D^{-\frac{1}{2}})^i = D^{\frac{1}{2}} \L^i D^{-\frac{1}{2}}$ for each natural number $i$.
     We prove this by induction on $i$.
     For the base case, if $i = 0$, both sides of the equation equal $I$.
     For the inductive step, suppose the equation holds for $i$.
     Then
     \begin{align*}
-      (D^{\frac{1}{2}} N D^{-\frac{1}{2}})^{i + 1} & = (D^{\frac{1}{2}} N D^{-\frac{1}{2}}) (D^{\frac{1}{2}} N D^{-\frac{1}{2}})^i \\
-      & = (D^{\frac{1}{2}} N D^{-\frac{1}{2}}) (D^{\frac{1}{2}} N^i D^{-\frac{1}{2}}) \\
-      & = D^{\frac{1}{2}} N N^i D^{-\frac{1}{2}} \\
-      & = D^{\frac{1}{2}} N^{i + 1} D^{-\frac{1}{2}}.
+      (D^{\frac{1}{2}} \L D^{-\frac{1}{2}})^{i + 1} & = (D^{\frac{1}{2}} \L D^{-\frac{1}{2}}) (D^{\frac{1}{2}} \L D^{-\frac{1}{2}})^i \\
+      & = (D^{\frac{1}{2}} \L D^{-\frac{1}{2}}) (D^{\frac{1}{2}} \L^i D^{-\frac{1}{2}}) \\
+      & = D^{\frac{1}{2}} \L \L^i D^{-\frac{1}{2}} \\
+      & = D^{\frac{1}{2}} \L^{i + 1} D^{-\frac{1}{2}}.
     \end{align*}
     This concludes the proof.
   \item
