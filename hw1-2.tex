@@ -88,7 +88,7 @@
 \newcommand{\0}{\mathbf{0}}
 \newcommand{\e}{\mathbf{e}}
 \renewcommand{\L}{\mathcal{L}}
-%\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\rk}{rk}
 
 %% Define the author, title, and date for the document.
 \author{Jeffrey~Finkelstein}
@@ -100,10 +100,59 @@
 
 %% Document content goes here.
 \begin{enumerate}
+\item[2]
+  (\emph{Conferred with Giovanni.})
+  In this problem, we assume that each $S_i$ is a proper, nontrivial subset of $V$.
+  If one of the subsets $S_i$ were the empty set, we could simply remove it from the sequence and make the same argument with a smaller $k$.
+  If one of the subsets were the vertex set, then $k$ could equal one and the conclusion would be false.
+
+  For each subset $S_i$ of $V$, the matrix $I_{K_{S_i}} + A(K_{S_i})$ has rank one because it is a permutation of the block matrix
+  \begin{equation*}
+    \begin{bmatrix}
+      J & O \\
+      O & O
+    \end{bmatrix}.
+  \end{equation*}
+  By subadditivity of rank,
+  \begin{equation*}
+    \rk\left(\sum_{i = 1}^k (I_{S_i} + A(K_{S_i}))\right) \leq \sum_{i = 1}^k \rk(I_{S_i} + A(K_{S_i})) = \sum_{i = 1}^k 1 = k.
+  \end{equation*}
+  It remains to show that the left side of this inequality is at least $n$.
+
+  Since $S_i$ is a proper, nontrivial subset of $V$, there is a vertex $u$ in $S_i$ and a vertex $v$ in $V \setminus S_i$.
+  Thus the edge $(u, v)$ is in $K_V$ but not in $K_{S_i}$.
+  In other words, $A(K_V)_{uv} = 1$ but $A(K_{S_i})_{uv} = 0$.
+  Since $A(K_v)$ is the sum of each $A(K_{S_i})$, at least one of the matrices, say $A(K_{S_j})$ where $S_j \neq S_i$, must include a one in entry $(u, v)$.
+  Therefore both $u$ and $v$ are in $S_j$, and the edge $(u, v)$ is in $K_{S_j}$.
+  Since $u$ appears in both $S_i$ and $S_j$, both $I_{S_i}$ and $I_{S_j}$ have a one on the diagonal.
+  This reasoning can be applied to each vertex: if a vertex were in only one subset, then there would be another vertex not in that subset whose edge would not be represented in the adjacency matrix $A(K_V)$, therefore each vertex must appear in at least two subsets.
+  Thus
+  \begin{equation*}
+    \sum_{i = 1}^k I_{S_i} = B,
+  \end{equation*}
+  where $B$ is a diagonal matrix with each diagonal entry greater than or equal to two.
+
+  Now we have
+  \begin{equation*}
+    \sum_{i = 1}^k (I_{S_i} + A(K_{S_i})) = B + A(K_V) = D + J,
+  \end{equation*}
+  where $D$ is a diagonal matrix with each diagonal entry at least one.
+  Gaussian elimination on the matrix $D + J$ reveals that it has full rank, so
+  \begin{equation*}
+    \rk\left(\sum_{i = 1}^k (I_{S_i} + A(K_{S_i}))\right) = \rk(D + J) \geq n.
+  \end{equation*}
+  This concludes the proof.
 \item[5]
   \begin{enumerate}
   \item
-    We have
+    By substituting the definitions of the random walk matrix, the normalized random walk matrix, and the normalized Laplacian in the appropriate places, we have $I - W = D^{\frac{1}{2}} \L D^{-\frac{1}{2}}$.
+    Hence
+    \begin{equation*}
+      e^{-t(I - W)} = e^{-t D^{\frac{1}{2}} \L D^{-\frac{1}{2}}} = \sum_{i = 0}^\infty \frac{t^i (D^{\frac{1}{2}} \L D^{-\frac{1}{2}})}{i!}.
+    \end{equation*}
+
+
+
     \begin{equation*}
       e^{-t(I - W)} = e^{-t} \sum_{i = 0}^\infty \frac{t^i W^i}{i!} = e^{-t} \sum_{i = 0}^\infty \frac{t^i (D^{\frac{1}{2}} N D^{-\frac{1}{2}})^i}{i!}
     \end{equation*}
