@@ -82,7 +82,8 @@
 \declaretheorem[numberwithin=section]{theorem}
 
 %% Custom commands are declared here.
-\newcommand{\todo}[1]{\textbf{TODO #1}}
+%\newcommand{\todo}[1]{\textbf{TODO #1}}
+\newcommand{\incomplete}[1]{\textbf{INCOMPLETE: #1}}
 %\newcommand{\R}{\mathbb{R}}
 \newcommand{\1}{\mathbf{1}}
 \newcommand{\0}{\mathbf{0}}
@@ -180,7 +181,7 @@
       & = \prod_{i = 1}^n v_i v_i^T e^{\rho_i} \\
       & = \prod_{i = 1}^n e^{\rho_i} v_i v_i^T
     \end{align*}
-    \todo{This should be a sum, not a product.}
+    \incomplete{This should be a sum, not a product.}
   \item
     (In this proof, the symbol $e$ denotes Euler's constant and the symbol $\e_i$ denotes the $i$th standard basis vector.)
     Our goal is to show
@@ -201,7 +202,7 @@
       & = \sqrt{\frac{d_j}{d_i}} \sqrt{d_i} \sqrt{d_j} \\
       & = d_j.
     \end{align*}
-    \todo{We are off by a factor of $\1^T D \1$ here.}
+    \incomplete{We are off by a factor of $\1^T D \1$ here.}
 
     By parts (a) and (b),
     \begin{align*}
@@ -254,7 +255,12 @@
     \begin{equation*}
       P = \alpha D^{\frac{1}{2}} \left(\sum_{\ell = 0}^\infty (1 - \alpha)^\ell \sum_{k = 1}^n \nu_k^\ell v_k v_k^T \right) D^{-\frac{1}{2}}.
     \end{equation*}
-    \todo{I'm not sure where to go from here.}
+    \incomplete{I'm not sure where to go from here.}
+  \end{enumerate}
+\item[6]
+  \begin{enumerate}
+  \item \incomplete{I tried to expand the summations but failed to prove their equality.}
+  \item \incomplete{I tried to show that $x^T L(K_G) x$ causes $x$ to have a component orthogonal to $D \1$ but failed to prove the equality.}
   \end{enumerate}
 \item[8]
   \begin{enumerate}
@@ -327,6 +333,15 @@
     \begin{equation*}
       \frac{\Omega(1)}{n \log n} = \frac{\Omega(1)}{n^2 \log n} n \leq \lambda_2(L_{T_d}).
     \end{equation*}
+  \end{enumerate}
+\item[9]
+  \begin{enumerate}
+  \item \incomplete{I'm guessing it involves solving the minimization problem given the $\ell_1$ embedding.}
+  \item \incomplete{I can't figure this one out.}
+  \end{enumerate}
+\item[10]
+  \begin{enumerate}
+  \item \incomplete{I assume this involves applying the theorem showing convergence of the lazy random walk to the stationary distribution, but I can't figure out how to get an additive approximation ratio.}
   \end{enumerate}
 \end{enumerate}
 
