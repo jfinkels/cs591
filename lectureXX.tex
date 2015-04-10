@@ -1,0 +1,186 @@
+\documentclass[11pt]{article}
+\input{lnpreamble.tex}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{tikz}
+
+\newcommand{\0}{\mathbf{0}}
+\newcommand{\1}{\mathbf{1}}
+
+\DeclareMathOperator{\Vol}{Vol}
+\DeclareMathOperator{\LR}{LR}
+
+\begin{document}
+
+\handout{}{CS 591 O1: Iterative Methods for Graph Algorithms and Network Analysis}{Spring 2015}{Lecture 3: Spectral Graph and Graph Partitioning}{Instructor: Lorenzo Orecchia}{Scribe: JF}
+
+% Foreword
+%
+% context (focus on anyone) why now? - current situation, and why the need is so important
+% need (focus on readers) why you? - why this is relevant to the reader, and why something needed to be done
+% task (focus on author) why me? - what was undertaken to address the need
+% object (focus on document) why this document - what the document covers
+
+% Summary
+%
+% findings (focus on author) what? - what the work revealed when performing the task
+% conclusion (focus on readers) so what? - what the findings mean for the audience
+% perspective (focus on anyone) what now? - what should be done next
+
+\section{Lagrangian duality generalizes dual linear programs}
+
+Concluding the previous lecture on Lagrangian duality, let us ensure that the Lagrangian dual program for a given primal linear program matches our original definition of the dual of a linear program.
+
+For any $A$, $b$, and $c$, the (primal) linear program is
+\begin{align*}
+  \text{minimize } & c^T x \\
+  \text{subject to } & A x - b = \0 \\
+  & x \geq \0.
+\end{align*}
+The Lagrangian of this program is
+\begin{equation*}
+  L(x, y, z) = c^T x + y^T (A x - b) - z^T x,
+\end{equation*}
+where $x$ are the primal variables, $y$ are the variables corresponding to the constraint $A x - b = \0$ and $z$ are the variables corresponding to the constraint $x \geq \0$.
+By algebraic manipulations, we have the equivalent formula
+\begin{equation*}
+  L(x, y, z) = (c + A^T y - z)^T x + b^T y.
+\end{equation*}
+The Lagrangian dual function is defined by $g(y, z) = \min_x L(x, y, z)$.
+If $c + A^T y - z$ is not the zero vector, then $g(y, z) = -\infty$, since $x$ can be any vector, so $g(y, z)$ can also be expressed as
+\begin{equation*}
+  g(y, z) =
+  \begin{cases}
+    -\infty & \text{if } c + A^T y - z \neq \0 \\
+    b^T y & \text{otherwise}
+  \end{cases}.
+\end{equation*}
+Thus, after renaming $y$ to $\hat{y}$ for now, the Lagrangian dual linear program is
+\begin{align*}
+  \text{maximize } & -b^T \hat{y} \\
+  \text{subject to } & c + A^T \hat{y} - z \neq \0 \\
+  & z \geq \0 \\
+  & \hat{y} \geq \0.
+\end{align*}
+By choosing $y = -\hat{y}$ and observing that $z \geq \0$ implies $c + A^T \hat{y} < \0$ in the above linear program, we get the equivalent dual linear program
+\begin{align*}
+  \text{maximize } & b^T y \\
+  \text{subject to } & c \geq A^T y \\
+  & y \geq \0.
+\end{align*}
+This matches the form of the dual linear program as given in the previous lecture.
+
+\section{Lagrangian duality for approximate graph partitioning}
+
+\subsection{Conductance and expansion of a graph}
+
+Assume for the sake of simplicity that we are considering only regular graphs.
+
+Recall the conductance of a set of vertices $S$,
+\begin{equation*}
+  \bar{\phi}(S) = \frac{|E(S, \bar{S})|}{\Vol(S) \Vol(\bar{S})} \Vol(G),
+\end{equation*}
+and the conductance of a graph $G$,
+\begin{equation*}
+  \bar{\phi}_G = \min_{S \subseteq V(G)} \bar{\phi}(S).
+\end{equation*}
+The algorithm implicit in Cheeger's Inequality gives a cut $S$ with conductance within $\sqrt{\bar{\phi}_G}$ of the cut of minimum conductance.
+That is, the algorithm implicit in the theorem outputs a cut $S$ such that
+\begin{equation*}
+  \bar{\phi}(S) \leq \sqrt{\bar{\phi}_G}
+\end{equation*}
+However, this is a poor approximation: if $\phi_G$ is large, the approximation is very loose.
+
+Now consider the \emph{expansion} of $S$,
+\begin{equation*}
+  \alpha(S) = \frac{|E(S, \bar{S})|}{|S| |\bar{S}|},
+\end{equation*}
+and the expansion of a graph $G$,
+\begin{equation*}
+  \alpha_G = \min_{S \subseteq V(G)} \alpha(S).
+\end{equation*}
+For $k$-regular graphs the expansion of $S$ is related to the conductance of $S$ by
+\begin{equation*}
+  \bar{\phi}(S) = \frac{|E(S, \bar{S})|}{\Vol(S) \Vol(\bar{S})} \Vol(G) = \frac{|E(S, \bar{S})|}{(k |S|) (k |\bar{S}|)} k n = \frac{n}{k} \frac{|E(S, \bar{S})}{|S| |\bar{S}|} = \frac{n}{k} \alpha(S).
+\end{equation*}
+The quotient $\frac{n}{k}$ is a constant with respect to the set $S$, so for a fixed graph $G$, this can be considered a constant.
+
+The Leighton--Rao algorithm gives a cut within $O(\log n)$ of the minimum expansion.
+That is, it outputs a cut $S$ such that
+\begin{equation*}
+  \alpha(S) \leq O(\log n) \alpha_G.
+\end{equation*}
+
+\subsection{Relaxations for computing expansion}
+
+Computing the expansion or conductance of a graph can be expressed as the problem of finding a cut $S$ that minimizes the appropriate objective function.
+By relaxing the domain over which we optimize this objective function from cuts to metrics or semimetrics, we can achieve, in polynomial time, an approximation to the cut that minimizes the objective.
+
+\subsubsection{Spectral relaxation}
+
+Before considering metric relaxations, recall the spectral relaxation used in Cheeger's Inequality to approximate the conductance,
+\begin{equation*}
+  \min_x \frac{x^T L x}{x^T L(K_G) x}.
+\end{equation*}
+This gives us a value less than $\alpha_G$, since for any subset $S$ of the vertices of $G$,
+\begin{equation*}
+  \min_x \frac{x^T L x}{x^T L(K_G) x} \leq \frac{\1_S^T L \1_S}{\1_S^T L(K_G) \1_S} = \frac{|E(S, \bar{S})|}{|S| |\bar{S}|} = \alpha(S),
+\end{equation*}
+where $\1_S$ is the characteristic vector of $S$.
+Since this is true for any $S$, it is true for the specific $S$ that minimizes $\alpha(S)$.
+
+\subsubsection{Relaxation to domains of metrics and semimetrics}
+
+Optimizing over a larger domain is easier in terms of computational complexity but yields a worse approximation.
+Similarly, optimizing over a smaller domain is more difficult, but yields a better approximation.
+Consider the following hierarchy of metrics and semimetrics.
+\begin{equation*}
+  \begin{tikzpicture}
+    \node at (-2, 2) (all) {all metrics};
+    \node at (+2, 2) (semi) {$\ell_2^2$-semimetrics};
+    \node at (0, 1) (l1) {$\ell_1$-embeddable metrics};
+    \node at (0, 0) (cut) {cut metrics};
+    \draw (cut) to (l1);
+    \draw (l1) to (all);
+    \draw (l1) to (semi);
+  \end{tikzpicture}
+\end{equation*}
+Optimization over all metrics versus optimization over $\ell_2^2$-semimetrics are incomparable in terms of approximation quality and computational complexity: they are two strategies that have their own strengths and weakness independent of each other.
+Optimizing over all metrics allows no geometric interpretation, but gives the benefit of the triangle inequality.
+On the other hand, optimizing over $\ell_2^2$-semimetrics allows the use of geometric properties, but does not benefit from the triangle inequality.
+We previously used the latter relaxation to get the approximation to conductance in Cheeger's Inequality.
+This time we use the former relaxation to get a better approximation to expansion.
+
+\subsubsection{Relaxation to arbitrary metrics}
+
+An arbitrary metric on a space with $n$ points can be interpreted as the complete graph on $n$ nodes with the distances on the edges.
+Roughly speaking, the expansion of a graph is a ratio measuring how close that graph is to the complete graph.
+Thus we may attempt to approximate the expansion of a graph by considering the ratio of an arbitrary metric on the edges of a graph to the metric on the edges of the complete graph, that is
+\begin{equation*}
+  \frac{\sum_{(i, j) \in E(G)} d(i, j)}{\sum_{i < j} d(i, j)}.
+\end{equation*}
+
+Minimizing this ratio gives an approximation to the expansion of a graph.
+This is the basis for the Leighton--Rao algorithm for finding a cut that approximates the expansion of a graph.
+
+\subsection{Leighton--Rao approximation of sparsest cut}
+
+Let $\mathcal{M}$ denote the set of all metrics. Define $\LR(G)$ by
+\begin{equation*}
+  \LR(G) = \min_{d \in \mathcal{M}} \frac{\sum_{(i, j) \in E(G)} d(i, j)}{\sum_{i < j} d(i, j)}.
+\end{equation*}
+The ratio being minimized is a homogeneous rational function, so it suffices to consider the minimization with the denominator scaled so that it equals one.
+Since the denominator can always be scaled this way, finding the metric that minimizes $\LR(G)$ is equivalent to solving the linear program
+\begin{align*}
+  \text{minimize } & \sum_{(i, j) \in E(G)} d(i, j) \\
+  \text{subject to } & \sum_{i < j} d(i, j) \geq 1 \\
+  & d(i, j) \geq 0
+\end{align*}
+where the variables are $d(i, j)$ for each $i$ and $j$ in $V$.
+
+Intuitively, if we consider $d(i, j)$ as the weight of the edge joining $i$ and $j$, then the objective function of this linear program is the volume of $G$ and the constraint forces the average pair of vertices to be far apart.
+If we consider the special case where the metric must be a cut metric, then the optimal solution to this is the cut metric for the set $S$, where $E(S, \bar{S})$ is as small as possible, all vertices in $S$ lie in a single point at zero, and all vertices in $\bar{S}$ lie in a single point at one.
+
+\end{document}
