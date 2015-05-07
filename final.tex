@@ -89,6 +89,8 @@
 \newcommand{\CUT}{\mathrm{CUT}}
 \newcommand{\LR}{\mathrm{LR}}
 \newcommand{\0}{\mathbf{0}}
+\DeclareMathOperator{\st}{st}
+\DeclareMathOperator{\Tr}{Tr}
 
 %% Define the author, title, and date for the document.
 \author{Jeffrey~Finkelstein}
@@ -187,7 +189,82 @@
     We have shown that there is a non-zero duality gap, so strong duality does not hold.
   \end{enumerate}
 \item ???
-\item ???
+\item
+  \begin{enumerate}
+  \item Since $|E_T| = n - 1$ and $|E_G| = m$, we have
+    \begin{equation*}
+      \Tr(L_T^+ L_G) = \st(T) + 2n - 2 - m = \st(T) + 2 |E_T| - |E_G|.
+    \end{equation*}
+    %% By subtracting $|E_T|$ from both sides, we have
+    %% \begin{equation*}
+    %%   \Tr(L_T^+ L_G) - |E_T| = \st(T) + |E_T| - |E_G|,
+    %% \end{equation*}
+    %% which holds exactly when
+    %% \begin{equation*}
+    %%   \Tr(L_T^+ L_G) - |E_T| = \st(T) - |E_G \setminus E_T|,
+    %% \end{equation*}
+    %% since $E_T \subseteq E_G$.
+    First we examine the right side of the equation.
+    Let $C_e$ denote the fundamental cycle of $e$ with respect to the tree $T$.
+    Let $P_e$ denote the unique path joining the endpoints of $e$ within the tree $T$.
+    For edges in the tree, $P_e = \{e\}$, and for edges not in the tree, $P_e = C_e \setminus \{e\}$.
+    By the former fact,
+    \begin{equation*}
+      1 = \frac{r_e}{r_e} = \frac{\sum_{e' \in P_e} r_{e'}}{r_e} = \sum_{e' \in P_e} \frac{r_{e'}}{r_e}
+    \end{equation*}
+    for each edge $e$ in the tree $T$, so
+    \begin{equation*}
+      |E_T| = \sum_{e \in E_T} 1 = \sum_{e \in E_T} \sum_{e' \in P_e} \frac{r_{e'}}{r_e}.
+    \end{equation*}
+    We use these facts below.
+    \begin{align*}
+      \st(T) - |E_G| + 2 |E_T| & = \st(T) - |E_G \setminus E_T| - |E_T| + 2 |E_T| \\
+      & = \st(T) - |E_G \setminus E_T| + |E_T| \\
+      & = |E_T| + \sum_{e \in E_G \setminus E_T} \frac{R_e}{r_e} - \sum_{e \in E_G \setminus E_T} 1 \\
+      & = |E_T| + \sum_{e \in E_G \setminus E_T} \frac{R_e - r_e}{r_e} \\
+      & = |E_T| + \sum_{e \in E_G \setminus E_T} \frac{\left(\sum_{e' \in C_e} r_{e'}\right) - r_e}{r_e} \\
+      & = |E_T| + \sum_{e \in E_G \setminus E_T} \frac{\sum_{e' \in P_e} r_{e'}}{r_e} \\
+      & = |E_T| + \sum_{e \in E_G \setminus E_T} \sum_{e' \in P_e} \frac{r_{e'}}{r_e} \\
+      & = \sum_{e \in E_T} \sum_{e' \in P_e} \frac{r_{e'}}{r_e} + \sum_{e \in E_G \setminus E_T} \sum_{e' \in P_e} \frac{r_{e'}}{r_e} \\
+      & = \sum_{e \in E_G} \sum_{e' \in P_e} \frac{r_{e'}}{r_e}.
+    \end{align*}
+
+    Now consider the left side of the equation.
+    We know from class that
+    \begin{equation*}
+      L_G = \sum_{e \in E_G} \frac{1}{r_e} \chi_e \chi_e^T,
+    \end{equation*}
+    so
+    \begin{equation*}
+      L_T^+ L_G = L_T^+ \sum_{e \in E_G} \frac{1}{r_e} \chi_e \chi_e^T = \sum_{e \in E_G} \frac{1}{r_e} L_T^+ \chi_e \chi_e^T.
+    \end{equation*}
+    Also, we know that $L_T^+ \chi_e$ is the solution of the equation $L_T y = \chi_e$; let $y_e$ denote this vector.
+    Thus
+    \begin{equation*}
+      L_T^+ L_G = \sum_{e \in E_G} \frac{1}{r_e} y_e \chi_e^T.
+    \end{equation*}
+    Now applying the trace operator,
+    \begin{align*}
+      \Tr(L_T^+ L_G) & = \Tr\left(\sum_{e \in E_G} \frac{1}{r_e} y_e \chi_e^T\right) \\
+      & = \sum_{e \in E_G} \frac{1}{r_e} \Tr(y_e \chi_e^T) \\
+      & = \sum_{e \in E_G} \frac{1}{r_e} \Tr(y_e^T \chi_e) \\
+      & = \sum_{e \in E_G} \frac{y_e^T \chi_e}{r_e}.
+    \end{align*}
+
+    To show that the two sides of the equation are equal, it suffices to show that for each edge $e$ in the graph $G$,
+    \begin{equation*}
+      y_e^T \chi_e = \sum_{e' \in P_e} r_{e'},
+    \end{equation*}
+    or equivalently, assuming $e = (i, j)$,
+    \begin{equation*}
+      y_e(i) - y_e(j) = \sum_{e' \in P_e} r_{e'}.
+    \end{equation*}
+    Since $P_e$ is the \emph{unique} path from $i$ to $j$ in $T$ (there is no other path from $i$ to $j$ in $T$), this equation must hold because the difference in voltages from vertex $i$ to vertex $j$ when sending one unit of flow from $i$ to $j$ must be the sum of the resistances of each edge along the unique path from $i$ to $j$.
+    %% Since $L_T y_e = \chi_e$, we know that $y_e^T L_T y_e = y_e^T \chi_e$, so
+    %% \begin{equation*}
+    %%   y_e^T L_T y_e = \sum_{e' \in P_e} r_{e'}.
+    %% \end{equation*}
+  \end{enumerate}
 \end{enumerate}
 
 %% Print the bibliography section here.
