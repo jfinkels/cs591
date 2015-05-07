@@ -105,7 +105,28 @@
 \begin{enumerate}
 \item
   \begin{enumerate}
-  \item ???
+  \item
+    Let $B$ be the (oriented) $m \times n$ incidence matrix for the graph $G$.
+    We know that $R_e = \chi_e L^+ \chi_e$, thus
+    \begin{align*}
+      \sum_{e \in E} R_e & = \sum_{e \in E} \chi_e L^+ \chi_e \\
+      & = \sum_{e \in E} (B L^+ B^T)_{e, e} \\
+      & = \Tr(B L^+ B^T) \\
+      & = \Tr(L^+ B^T B).
+    \end{align*}
+    We know that $L = B^T W B$, where $W$ is the diagonal matrix of edge weights.
+    Since $W$ is unweighted, $W = I$, so $L = B^T B$.
+    Thus
+    \begin{align*}
+      \Tr(L^+ B^T B) & = \Tr(L^+ L) \\
+      & = \Tr(I - \Pi) \\
+      & = \Tr(I) - \Tr(\Pi).
+    \end{align*}
+    where $\Pi$ is the projection matrix onto the nullspace of $L$.
+    We know $\Tr(I) = n$.
+    Assuming $G$ is connected, the dimension of the nullspace of $L$ is one.
+    According to the Wikipedia article on trace, the trace of a projection matrix equals the rank of the target space, so $\Tr(\Pi) = 1$.
+    Chaining the equalities completes the proof.
   \item
     According to Theorem~3 in Lecture~7, effective resistance is a metric on the set of vertices.
     Thus we can apply a modification of the Leighton--Rao algorithm, using the same general strategy that appears in the solution to problem 2, part b below.
