@@ -1,0 +1,196 @@
+%% final.tex - final exam solutions for CS 591 Spring 2015
+%%
+%% Copyright 2015 Jeffrey Finkelstein.
+%%
+%% This LaTeX markup document is made available under the terms of the Creative
+%% Commons Attribution-ShareAlike 4.0 International License,
+%% https://creativecommons.org/licenses/by-sa/4.0/.
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+%% This must come before hyperref.
+\usepackage{amsthm}
+%% This is strongly recommended by biblatex.
+\usepackage[english]{babel}
+\usepackage[backend=biber]{biblatex}
+\usepackage[T1]{fontenc}
+%% This must come before csquotes.
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+%% This is strongly recommended by biblatex.
+\usepackage{csquotes}
+%% This must come before hyperref.
+\usepackage{thmtools}
+%% This must come before complexity.
+\usepackage{hyperref}
+\usepackage{complexity}
+\usepackage{microtype}
+
+%% Set the amount by which certain characters protrude into the margins.
+%%
+%% \LoadMicrotypeFile{cmr}
+%%
+%%     This command forces the built-in protrusion settings for the Computer
+%%     Modern Roman (cmr) font family to become available at this point, so
+%%     that we can override these settings on the next line. Even though we are
+%%     really using the Latin Modern Roman (lmr) fonts, microtype uses the cmr
+%%     configuration file.
+%%
+%% \SetProtrusion
+%%
+%%     This instructs the microtype package that we are going to modify the
+%%     protrusion settings.
+%%
+%% [load=lmr-T1]
+%%
+%%     Loads the Type 1 (T1) encoding of the lmr font family, thereby setting
+%%     the default protrusion values for all the characters. This is only
+%%     possible after the \LoadMicrotypeFile{cmr} command (microtype
+%%     essentially considers lmr to be an alias for cmr).
+%%
+%% {encoding=T1, family=lmr}
+%%
+%%     Indicates that we are going to modify the protrusion values for the T1
+%%     encoding of the lmr font family.
+%%
+%% \textquotedblright = {,1000} (and similar commands)
+%%
+%%     Force the character given by \textquotedblright to have default
+%%     protrusion on the left margin (given by an empty string before the
+%%     comma) and full protrusion (that is, protrusion value 1000) on the right
+%%     margin.
+\LoadMicrotypeFile{cmr}
+\SetProtrusion
+    [load=lmr-T1]
+    {encoding=T1, family=lmr}
+    {
+      \textquotedblright = {,1000},
+      \textquotedblleft = {1000,},
+      {'} = {,1000},
+      {,} = {,1000},
+      {:} = {,1000},
+      {;} = {,1000},
+      {.} = {,1000}
+    }
+
+%% Set the title and author of the PDF file.
+\hypersetup{pdftitle={CS 591 Final exam solutions}, pdfauthor={Jeffrey Finkelstein}}
+
+%% Declare the bibliography file.
+\addbibresource{final.bib}
+
+%% Declare theorem-like environments.
+\declaretheorem[numberwithin=section]{theorem}
+
+%% Custom commands are declared here.
+%\newcommand{\email}[1]{\textlangle\href{mailto:#1}{\nolinkurl{#1}}\textrangle}
+\newcommand{\todo}[1]{\textbf{TODO #1}}
+\newcommand{\CUT}{\mathrm{CUT}}
+\newcommand{\LR}{\mathrm{LR}}
+\newcommand{\0}{\mathbf{0}}
+
+%% Define the author, title, and date for the document.
+\author{Jeffrey~Finkelstein}
+\title{CS 591 Final exam solutions}
+
+\begin{document}
+
+\maketitle
+
+%% Document content goes here.
+
+\begin{enumerate}
+\item ???
+\item
+  \begin{enumerate}
+  \item Let $K$ denote the complete graph on the set of vertices $V$.
+    \begin{align*}
+      E_K(S, \bar{S}) & = \left\{ \{u, v\} \in E_K \, \middle| \, u \in S \text{ and } v \in \bar{S}\right\} \\
+      & = \left\{ \{u, v\} \in \binom{V}{2} \, \middle| \, u \in S \text{ and } v \in \bar{S}\right\} \\
+      & = S \times \bar{S},
+    \end{align*}
+    where the first equality is by definition, the second is because $E_K = \binom{V}{2}$, and the third because $S$ and $\bar{S}$ form a partition of $V$.
+    Thus $|E_K(S, \bar{S})| = |S \times \bar{S}| = |S| |\bar{S}|$.
+    We conclude that
+    \begin{equation*}
+      \min_{S \subseteq V} \frac{|E(S, \bar{S})|}{|S| |\bar{S}|}
+      =
+      \min_{S \subseteq V} \frac{|E(S, \bar{S})|}{|E_K(S, \bar{S})|}
+      =
+      \min_{S \subseteq V} \frac{|E(S, \bar{S})|}{|E_H(S, \bar{S})|}.
+    \end{equation*}
+  \item (I consulted Luca's lecture notes in addition to yours for this problem.)
+    We know by the Leighton--Rao Theorem that $\LR_G \leq \alpha_G \leq O(\log n) \LR_G$.
+    Define $\alpha_{G, H}$ and $\LR_{G, H}$ by
+    \begin{equation*}
+      \alpha_{G, H} = \min_{\delta \in \CUT_V} \frac{\delta(G)}{\delta(H)}
+      \qquad \text{and} \qquad
+      \LR_{G, H} = \min_{\delta \in M_V} \frac{\delta(G)}{\delta(H)},
+    \end{equation*}
+    where $\CUT_V$ is the cone of cut metrics on vertex set $V$ and $M_V$ is the set of all metrics on $V$.
+    A proof similar to that of the Leighton--Rao Theorem shows that $\LR_{G, H} \leq \alpha_{G, H} \leq O(\log k) \LR_{G, H}$.
+    Then the algorithm for finding an $O(\log k)$-approximate $H$-sparsest cut is
+    \begin{enumerate}
+    \item Compute $\delta^*$, the minimum over all metrics $\delta$ of the ratio $\frac{\delta(G)}{\delta(H)}$.
+    \item Use Bourgain's Theorem to compute an $\ell_1$-embedding of $\delta^*$ with $O(\log k)$ distortion.
+    \item Use the algorithm implicit in Cheeger's inequality to compute a cut from the $\ell_1$-embedding.
+    \end{enumerate}
+    Computing the optimum $\delta^*$, computing a low distortion $\ell_1$-embedding from a metric, and finding a cut from an $\ell_1$-embedding can all be done in probabilistic polynomial time.
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \item
+    We assume the domain of the optimization problems is the set of non-zero real vectors.
+    First we put the original optimization problem into the equivalent minimization form,
+    \begin{align*}
+      \text{minimize } & -x^T A x \\
+      \text{subject to } & x^T x - 1 = 0.
+    \end{align*}
+    Using the notation from class, we let $f(x) = -x^T A x$ and $h(x) = x^T x - 1$.
+    The Lagrangian is defined by $L(x, v) = f(x) + v h(x)$ and the Lagrangian dual function is defined by $g(v) = \min_x L(x, v)$.
+    Thus the Lagrangian dual optimization problem is
+    \begin{align*}
+      \text{maximize } & \min_{x} \left(-x^T A x + v \left(x^T x - 1\right)\right) \\
+      \text{subject to } & v \geq 0.
+    \end{align*}
+    We find the minimum in the objective function of this optimization problem by considering values for $x$ that make the derivative zero.
+    The derivative of $-x^T A x + v \left(x^T x - 1\right)$ with respect to $x$ is $-2 A x + 2 v x$.
+    This is zero exactly when $Ax = vx$ (excluding the case when $x = \0$, since that is not in the domain), or in other words, when $x$ is a $v$-eigenvector of $A$.
+    If $x$ is a $v$-eigenvector of $A$, then $-x^T A x + v \left(x^T x - 1\right) = -v$.
+    Thus our Lagrangian dual optimization problem is
+    \begin{align*}
+      \text{maximize } & -v \\
+      \text{subject to } & v \geq 0.
+    \end{align*}
+  \item
+    Since the primal objective function is not convex (because, for example, the Hessian is not necessarily positive semidefinite for an arbitrary matrix $A$), we cannot use Slater's condition to prove strong duality (if strong duality holds).
+    Thus we will instead try to determine the duality gap.
+
+    Since $v \mapsto -v$ is a monotonically decreasing function with domain bounded on the left by zero, it achieves its maximum at zero, and that value is zero as well.
+    We will show that the optimal value of the primal problem is not zero.
+
+    Since the primal problem has the constraint $x^T x = 1$, we can consider the equivalent problem
+    \begin{align*}
+      \text{maximize } & \frac{x^T A x}{x^T x} \\
+      \text{subject to } & x^T x = 1.
+    \end{align*}
+    Assuming $A$ is real, the value
+    \begin{equation*}
+      \max_{x \neq \0} \frac{x^T A x}{x^T x}
+    \end{equation*}
+    is the Rayleigh quotient for the largest eigenvalue of $A$.
+    Therefore the maximum value in the primal problem is the largest eigenvalue of $A$.
+    Assuming $A$ is non-zero, if the largest eigenvalue of $A$ were zero, then all eigenvalues of $A$ would be zero, a contradiction with the assumption.
+    Thus the largest eigenvalue of $A$ is not zero, and hence the maximum value of the primal problem is not zero.
+
+    We have shown that there is a non-zero duality gap, so strong duality does not hold.
+  \end{enumerate}
+\item ???
+\item ???
+\end{enumerate}
+
+%% Print the bibliography section here.
+\printbibliography
+
+\end{document}
