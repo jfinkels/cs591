@@ -103,7 +103,33 @@
 %% Document content goes here.
 
 \begin{enumerate}
-\item ???
+\item
+  \begin{enumerate}
+  \item ???
+  \item
+    According to Theorem~3 in Lecture~7, effective resistance is a metric on the set of vertices.
+    Thus we can apply a modification of the Leighton--Rao algorithm, using the same general strategy that appears in the solution to problem 2, part b below.
+    \begin{enumerate}
+    \item
+      Compute the effective resistance of each edge in the graph by computing $L^+$ then computing $\chi_e L^+ \chi_e$.
+      Let $R$ be the metric defined by these effective resistances.
+    \item Use Bourgain's Theorem to compute an $\ell_1$-embedding of $\delta^*$ with $O(\log n)$ distortion.
+    \item Use the algorithm implicit in Cheeger's inequality to compute a cut from the $\ell_1$-embedding.
+    \end{enumerate}
+    Computing the pseudoinverse can be done in polynomial time by one of the iterative methods discussed in class.
+    Computing an $\ell_1$-embedding and computing a cut from such an embedding can both be done in (probabilistic) polynomial time as described in class.
+
+    Under the hypothesis given in the problem definition, we know the average effective resistance between any pair of vertices is at least $\gamma / d$.
+    When considering the effective resistance as a metric $d$, this lower bound on the average effective resistance translates to a lower bound on the average distance, so the constraint
+    \begin{equation*}
+      \sum_{\{i, j\} \in \binom{V}{2}} d_{ij} \geq 1
+    \end{equation*}
+    in the (primal) Leighton--Rao linear program becomes
+    \begin{equation*}
+      \sum_{\{i, j\} \in \binom{V}{2}} d_{ij} \geq \frac{1}{\gamma}.
+    \end{equation*}
+    This relaxed constraint allows us to find a better solution when using the main technical lemma to prove the Leighton--Rao Theorem.
+  \end{enumerate}
 \item
   \begin{enumerate}
   \item Let $K$ denote the complete graph on the set of vertices $V$.
@@ -264,6 +290,7 @@
     %% \begin{equation*}
     %%   y_e^T L_T y_e = \sum_{e' \in P_e} r_{e'}.
     %% \end{equation*}
+  \item ???
   \end{enumerate}
 \end{enumerate}
 
