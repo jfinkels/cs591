@@ -235,7 +235,20 @@
 
     We have shown that there is a non-zero duality gap, so strong duality does not hold.
   \end{enumerate}
-\item ???
+\item
+  \begin{enumerate}
+  \item
+    I don't know how to do this.
+    My guess is to set
+    \begin{itemize}
+      \item $T = m$,
+      \item the loss to be $1$ if the ball is thrown into a bin that does not currently have the maximum load or $-1$ if the ball is thrown into the bin with the maximum load,
+      \item $p^{(t)}$ to be a probability vector where $p^{(t)}_i$ represents the probability of throwing ball $t$ into bin $i$,
+      \item $\eta$ chosen appropriately to minimize the average regret.
+    \end{itemize}
+    Then the maximum load is something like the sum of the losses (which will actually be gains) due to the best expert, and you can do something like use Theorem~1 in the lecture notes on the Multiplicative Weight Updates algorithm to show the inequality.
+  \item I don't know how to do this problem.
+  \end{enumerate}
 \item
   \begin{enumerate}
   \item Since $|E_T| = n - 1$ and $|E_G| = m$, we have
