@@ -311,7 +311,22 @@
     %% \begin{equation*}
     %%   y_e^T L_T y_e = \sum_{e' \in P_e} r_{e'}.
     %% \end{equation*}
-  \item ???
+  \item
+    The proof of the running time is initially exactly the same as the proof of the running time, just replacing an arbitrary matrix $A$ with the matrix $L_T^+ L_G$.
+    From there, we get that we need to bound $\|T\|$, where $T$ is the block matrix
+    \begin{equation*}
+      T =
+      \begin{bmatrix}
+        I - \alpha L_T^+ L_G + \beta I & \beta I \\
+        I & O
+      \end{bmatrix}.
+    \end{equation*}
+    The next step in that proof requires using the eigendecomposition of the matrix $A$, so we would like to use the eigendecomposition of $L_T^+ L_G$.
+    However, at this point I'm not sure how to proceed.
+    Taking the eigendecomposition of the product doesn't seem to help us find a relationship between the trace and the largest and smallest eigenvalues.
+    Taking the eigendecomposition of each matrix individually, say $L_T^+ = U \Lambda U^T$ and $L_G = V \Sigma V^T$, doesn't help because $U$ and $V$, while orthogonal matrices themselves, are not necessarily inverses of one another.
+
+    I'm thinking that since the original proof of the convergence time of the heavy ball method involves eigenvalues, the trace is involved here via the equality $\Tr(L_T^+ L_G) = \sum_{i = 1}^n \lambda_i(L_T^+ L_G)$.
   \end{enumerate}
 \end{enumerate}
 
